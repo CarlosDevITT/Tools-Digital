@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="shortcut icon" href="assets/Tools.png" type="image/x-icon">
+            <link rel="manifest" href="manifest.json">
+            <title>Dashboard de Ferramentas</title>
+            <link rel="stylesheet" href="styles.css">
+            <link rel="stylesheet" href="navbar/assets/css/styles.css">
+            <link rel="stylesheet" href="src/tools/style.css">
+            <link rel="stylesheet" href="src/tools2/style.css">
+            <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+        </head>
+<body>
+
+  <!--=============== NAV ===============-->
+    <nav class="nav" id="nav">
+        <div class="nav__menu container" id="nav-menu">
+            <div class="nav__shape"></div>
+
+            <div class="nav__close" id="nav-close">
+                <i class='bx bx-x'></i>
+            </div>
+            
+            <div class="nav__data">
+                <div class="nav__mask">
+                    <!-- Change your profile picture -->
+                    <img src="assets/people.png" alt="" class="nav__img">
+                </div>
+            </div>
+
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a href="#home" class="nav__link active-link">
+                        <i class='bx bx-home' ></i> Notas 
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a href="#about" class="nav__link">
+                        <i class='bx bx-user'></i> Tools
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a href="#portfolio" class="nav__link">
+                        <i class='bx bx-briefcase-alt-2'></i> Ferramentas ON
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a href="#skills" class="nav__link">
+                        <i class='bx bx-bookmark'></i> Qr code
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a href="#contact" class="nav__link">
+                        <i class='bx bx-message-square-detail'></i> Contact
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a href="https://script.google.com/macros/s/AKfycbyaZj626-5zUvtyK4aD4jOVyzhyJ1HaEQ7yoAMk7M_tiWnYCwT_W2XgeGJJjE5VT0o0bQ/exec" target="_blank" class="nav__link">
+                        <i class='bx bx-message-square-detail'></i> Ticks Tools
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+   <!--=============== MAIN ===============-->
+    <main class="main" id="main">
+        <!--=============== HEADER ===============-->
+        <header class="header" id="header">
+            <nav class="header__nav container">
+                <a href="#" class="header__logo">
+                    tools Digital
+                </a>
+
+                <!-- Toggle button -->
+                <div class="header__toggle" id="header-toggle">
+                    <i class='bx bx-grid-alt'></i>
+                </div>
+            </nav>
+        </header>
+
+
+        <!-- When inserting your content into sections, remove the section__height class -->
+        <!--=============== tools main ===============-->
+        <section class="section section__height container" id="home">
+                <h1>NOTAS - PARECE TECNICO.</h1>
+                <div class="popup-box">
+                        <div class="popup">
+                          <div class="content">
+                            <header>
+                              <p></p>
+                              <i class="uil uil-times"></i>
+                            </header>
+                            <form action="#">
+                              <div class="row title">
+                                <label>NOTA</label>
+                                <input type="text" spellcheck="false">
+                              </div>
+                              <div class="row description">
+                                <label>Descrição</label>
+                                <textarea spellcheck="false"></textarea>
+                              </div>
+                              <button></button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="wrapper">
+                        <li class="add-box">
+                          <div class="icon"><i class="uil uil-plus"></i></div>
+                          <p>Nova nota</p>
+                        </li>
+                      </div>
+        </section>
+
+        <!--=============== ABOUT ===============-->
+        <section class="section section__height container" id="about">
+                <h1>Painel de Ferramentas</h1>  
+                <div class="dashboard">
+                            
+                    <!-- Seção 1: Atendimento ao Cliente e Chatbots -->
+                    <div class="category">
+                        <h2>Atendimento ao Cliente e Chatbots</h2>
+                        <div class="tools">
+                                <a href="https://app.botpress.cloud/workspaces/wkspace_01JMSXCS18Y0JYJRGSJWKEH35Y/bots/a818751b-6615-4cbc-90e4-e69ec52b91d3/webchat/v2/general" class="tool-icon"  target="_blank" >
+                                    <i class="fas fa-fire"></i>
+                                    <span>botpress</span>
+                                </a>
+
+                            <a href="https://www.tidio.com/panel/dashboard" class="tool-icon"  target="_blank" >
+                                <i class="fas fa-robot"></i>
+                                <span>Tidio</span>
+                            </a>
+                             <!-- Ferramenta 10: Instaninja -->
+                            <a target="_blank" href="https://instaninja.com/" class="tool-icon">
+                                <i class="fas fa-bolt"></i>
+                                <span>Instaninja</span>
+                            </a>
+    
+                            <a  target="_blank"  href="https://app.manychat.com/fb2473929/dashboard" class="tool-icon">
+                                <i class="fab fa-facebook-messenger"></i>
+                                <span>ManyChat</span>
+                            </a>
+                            <a href="https://chat.deepseek.com/" class="tool-icon"  target="_blank" >
+                                <i class="fas fa-robot"></i>
+                                <span>DeepSeek</span>
+                            </a>
+                            <a  target="_blank"  href="https://www.blackbox.ai/chat/8N5BN8V" class="tool-icon">
+                                <i class="fas fa-comments"></i>
+                                <span>Blackbox </span>
+                            </a>
+                            <a  target="_blank"  href="https://poe.com/" class="tool-icon">
+                                <i class="fas fa-comments"></i>
+                                <span>Poe IA </span>
+                            </a>
+                            <a  target="_blank"  href="https://gemini.google.com/app" class="tool-icon">
+                                <i class="fas fa-comments"></i>
+                                <span>Gemini IA </span>
+                            </a>
+                            <a  target="_blank"  href="https://app.copy.ai/teamspace/27810091/dashboard/new?tool=chat" class="tool-icon">
+                                <i class="fas fa-headset"></i>
+                                <span>Copyw IA</span>
+                            </a>
+                            <a  target="_blank"  href="https://www.freshworks.com/freshchat/" class="tool-icon">
+                                <i class="fas fa-comment-dots"></i>
+                                <span>Freshchat</span>
+                            </a>
+
+                            <a href="https://grok.com/?referrer=website" class="tool-icon"  target="_blank" >
+                                <i class="fas fa-robot"></i>
+                                <span>grok</span>
+                            </a>
+                        </div>
+                    </div>
+    
+                    <div class="category">
+                            <h2>Base de Dados e Documentos</h2>
+                            <div class="tools">
+                                <!-- Ferramenta 1: Google Drive -->
+                                <a target="_blank" href="https://drive.google.com/" class="tool-icon">
+                                    <i class="fab fa-google-drive"></i>
+                                    <span>Google Drive</span>
+                                </a>
+                        
+                                <!-- Ferramenta 2: Microsoft OneDrive -->
+                                <a target="_blank" href="https://www.microsoft.com/pt-br/microsoft-365/onedrive/online-cloud-storage" class="tool-icon">
+                                    <i class="fab fa-microsoft"></i>
+                                    <span>OneDrive</span>
+                                </a>
+                        
+                                <!-- Ferramenta 3: Dropbox -->
+                                <a target="_blank" href="https://www.dropbox.com/" class="tool-icon">
+                                    <i class="fab fa-dropbox"></i>
+                                    <span>Dropbox</span>
+                                </a>
+                        
+                                <!-- Ferramenta 4: Google Sheets -->
+                                <a target="_blank" href="https://www.google.com/sheets/about/" class="tool-icon">
+                                    <i class="fas fa-table"></i>
+                                    <span>Google Sheets</span>
+                                </a>
+                        
+                                <!-- Ferramenta 5: Microsoft Excel Online -->
+                                <a target="_blank" href="https://www.microsoft.com/pt-br/microsoft-365/excel" class="tool-icon">
+                                    <i class="fas fa-file-excel"></i>
+                                    <span>Excel Online</span>
+                                </a>
+                        
+                                <!-- Ferramenta 6: PDFescape (Editor de PDF) -->
+                                <a target="_blank" href="https://www.pdfescape.com/" class="tool-icon">
+                                    <i class="fas fa-file-pdf"></i>
+                                    <span>PDFescape</span>
+                                </a>
+                        
+                                <!-- Ferramenta 7: Notion (Organização de Documentos) -->
+                                <a target="_blank" href="https://www.notion.so/" class="tool-icon">
+                                    <i class="fas fa-sticky-note"></i>
+                                    <span>Notion</span>
+                                </a>
+                        
+                                <!-- Ferramenta 8: Airtable (Banco de Dados e Planilhas) -->
+                                <a target="_blank" href="https://www.airtable.com/" class="tool-icon">
+                                    <i class="fas fa-database"></i>
+                                    <span>Airtable</span>
+                                </a>
+                        
+                                <!-- Ferramenta 9: DocuSign (Assinatura de Documentos) -->
+                                <a target="_blank" href="https://www.docusign.com/" class="tool-icon">
+                                    <i class="fas fa-signature"></i>
+                                    <span>DocuSign</span>
+                                </a>
+                        
+                                <!-- Ferramenta 10: SmallPDF (Conversor e Editor de PDF) -->
+                                <a target="_blank" href="https://smallpdf.com/" class="tool-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>SmallPDF</span>
+                                </a>
+
+                                <a target="_blank" href="https://learningstudioai.com/?via=krav&gad_source=1&gclid=CjwKCAiAzvC9BhADEiwAEhtlN5VwICJBs70Kiye4x0tnsUcHdlY5blBcaKRobYMXv89D3UDVaY7cJxoChCsQAvD_BwE" class="tool-icon">
+                                    <i class="fas fa-database"></i>
+                                    <span>learningstudio</span>
+                                </a>
+                                 <!-- Ferramenta 9: DocuSign (Assinatura de Documentos) -->
+                                 <a target="_blank" href="https://www.blinkshot.io/" class="tool-icon">
+                                    <i class="fas fa-signature"></i>
+                                    <span>blinkshot</span>
+                                </a>
+                        
+                            </div>
+                        </div>
+                    <!-- Seção 2: Marketing e Redes Sociais -->
+                    <div class="category">
+                        <h2>Rede sociais</h2>
+                        <div class="tools">
+                                <div class="tools">
+                                        <!-- Ferramenta 1: Instagram -->
+                                        <a target="_blank" href="https://www.instagram.com/" class="tool-icon">
+                                            <i class="fab fa-instagram"></i>
+                                            <span>Instagram</span>
+                                        </a>
+                                
+                                        <!-- Ferramenta 2: Facebook -->
+                                        <a target="_blank" href="https://www.facebook.com/" class="tool-icon">
+                                            <i class="fab fa-facebook"></i>
+                                            <span>Facebook</span>
+                                        </a>
+                                
+                                        <!-- Ferramenta 3: Twitter (X) -->
+                                        <a target="_blank" href="https://twitter.com/" class="tool-icon">
+                                            <i class="fab fa-twitter"></i>
+                                            <span>Twitter (X)</span>
+                                        </a>
+                                
+                                        <!-- Ferramenta 4: LinkedIn -->
+                                        <a target="_blank" href="https://www.linkedin.com/" class="tool-icon">
+                                            <i class="fab fa-linkedin"></i>
+                                            <span>LinkedIn</span>
+                                        </a>
+                                
+                                        <!-- Ferramenta 5: YouTube -->
+                                        <a target="_blank" href="https://www.youtube.com/" class="tool-icon">
+                                            <i class="fab fa-youtube"></i>
+                                            <span>YouTube</span>
+                                        </a>
+                                
+                                        <!-- Ferramenta 6: TikTok -->
+                                        <a target="_blank" href="https://www.tiktok.com/" class="tool-icon">
+                                            <i class="fab fa-tiktok"></i>
+                                            <span>TikTok</span>
+                                        </a>
+                                
+                            <a  target="_blank"  href="https://huggingface.co/spaces/Yuanshi/OminiControl" class="tool-icon">
+                                <i class="fas fa-palette"></i>
+                                <span>Omini Control</span>
+                            </a>
+    
+                            <a  target="_blank"  href="https://buffer.com/" class="tool-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Buffer</span>
+                            </a>
+                            <a  target="_blank"  href="https://hootsuite.com/" class="tool-icon">
+                                <i class="fab fa-twitter"></i>
+                                <span>Hootsuite</span>
+                            </a>
+                            <a  target="_blank"  href="https://mailchimp.com/" class="tool-icon">
+                                <i class="fas fa-envelope"></i>
+                                <span>Mailchimp</span>
+                            </a>
+                            <a  target="_blank"  href="https://www.hubspot.com/" class="tool-icon">
+                                <i class="fas fa-chart-line"></i>
+                                <span>HubSpot Marketing</span>
+                            </a>
+                        </div>
+                    </div>
+    
+                    <!-- Seção 3: Gestão de Tráfego -->
+                    <div class="category">
+                        <h2>Gestão de Tráfego</h2>
+                        <div class="tools">
+                            <a  target="_blank" href="https://ads.google.com/" class="tool-icon">
+                                <i class="fab fa-google"></i>
+                                <span>Google Ads</span>
+                            </a>
+                            <a  target="_blank" href="https://adsmanager.facebook.com/adsmanager/manage/campaigns?nav_source=fb4b&lsrc=lb&act=836166101606165" class="tool-icon">
+                                <i class="fab fa-facebook"></i>
+                                <span>Facebook Ads</span>
+                            </a>
+                            <a  target="_blank" href="https://analytics.google.com/" class="tool-icon">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>Google Analytics</span>
+                            </a>
+                            <a  target="_blank" href="https://www.hotjar.com/" class="tool-icon">
+                                <i class="fas fa-fire"></i>
+                                <span>Hotjar</span>
+                            </a>
+                            <a  target="_blank" href="https://www.semrush.com/" class="tool-icon">
+                                <i class="fas fa-search"></i>
+                                <span>SEMrush</span>
+                            </a>
+                        </div>
+                    </div>
+    
+                    <!-- Seção: Ferramentas de Edição de Imagens e Documentos -->
+                        <div class="category">
+                            <h2>Ferramentas de Edição de Imagens e Documentos</h2>
+                            <div class="tools">
+                                <!-- Pixelcut Background Remover -->
+                                <a href="https://www.pixelcut.ai/t/background-remover" class="tool-icon" target="_blank">
+                                    <i class="fas fa-image"></i>
+                                    <span>Pixelcut - Remover Fundo</span>
+                                </a>
+                                
+                                <!-- remove.bg -->
+                                <a href="https://www.remove.bg/" class="tool-icon" target="_blank">
+                                    <i class="fas fa-image"></i>
+                                    <span>remove.bg - Remover Fundo de Imagens</span>
+                                </a>
+                                
+                                <!-- iLoveIMG -->
+                                <a href="https://www.iloveimg.com/" class="tool-icon" target="_blank">
+                                    <i class="fas fa-tools"></i>
+                                    <span>iLoveIMG - Edição de Imagens</span>
+                                </a>
+    
+                                <!-- iLovePDF -->
+                                <a href="https://www.ilovepdf.com/" class="tool-icon" target="_blank">
+                                    <i class="fas fa-file-pdf"></i>
+                                    <span>iLovePDF - Edição de PDFs</span>
+                                </a>
+    
+                                <!-- Canva -->
+                                <a href="https://www.canva.com/" class="tool-icon" target="_blank">
+                                    <i class="fas fa-paint-brush"></i>
+                                    <span>Canva - Design Gráfico</span>
+                                </a>
+    
+                                <!-- Fotor -->
+                                <a href="https://www.fotor.com/" class="tool-icon" target="_blank">
+                                    <i class="fas fa-camera-retro"></i>
+                                    <span>Fotor - Editor de Fotos Online</span>
+                                </a>
+    
+                                <!-- Photopea -->
+                                <a href="https://www.photopea.com/" class="tool-icon" target="_blank">
+                                    <i class="fas fa-image"></i>
+                                    <span>Photopea - Editor de Imagens Online</span>
+                                </a>
+    
+                                <!-- Pixlr -->
+                                <a href="https://pixlr.com/" class="tool-icon" target="_blank">
+                                    <i class="fas fa-image"></i>
+                                    <span>Pixlr - Editor de Fotos Online</span>
+                                </a>
+    
+                                <!-- Canva -->
+                                <a href="https://ideogram.ai/" class="tool-icon" target="_blank">
+                                    <i class="fas fa-paint-brush"></i>
+                                    <span>Ideogram - Design </span>
+                                </a>
+                                <!-- Banco de dados - img -->
+                                <a href="https://br.freepik.com/" class="tool-icon" target="_blank">
+                                    <i class="fas fa-image"></i>
+                                    <span>Freepik - Fotos Online Free</span>
+                                </a>
+                                <!-- icones -->
+                                <a href="https://boxicons.com/" class="tool-icon" target="_blank">
+                                    <i class="fas fa-paint-brush"></i>
+                                    <span>Boxincons - Icons  Online Free</span>
+                                </a>
+                                 <!-- icones -->
+                                 <a href="https://thenounproject.com/" class="tool-icon" target="_blank">
+                                    <i class="fas fa-paint-brush"></i>
+                                    <span>TheounIcons - Icons  Online Free</span>
+                                </a>
+    
+    
+    
+                            </div>
+                        </div>
+                   
+                   <!-- Adicione mais seções conforme necessário -->
+                </div>
+        </section>
+
+        <!--===============IAS===============-->
+        <section class="section section__height container" id="portfolio">
+            <h1>FERRAMENTAS & IAS</h1>
+            <div class="dashboard">
+                
+                <!-- Seção 5: Segurança da Informação -->
+                    <div class="category">
+                        <h2>Segurança da Informação</h2>
+                        <div class="tools">
+                            <a href="https://www.lastpass.com/" class="tool-icon" target="_blank">
+                                <i class="fas fa-lock"></i>
+                                <span>LastPass</span>
+                            </a>
+                            <a href="https://www.norton.com/" class="tool-icon" target="_blank">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Norton</span>
+                            </a>
+                            <a href="https://www.avast.com/" class="tool-icon" target="_blank">
+                                <i class="fas fa-shield-virus"></i>
+                                <span>Avast</span>
+                            </a>
+                        </div>
+                    </div>
+    
+                   <!-- Seção 6: educação free -->
+                    <div class="category">
+                        <h2>Educação e E-learning</h2>
+                        <div class="tools">
+                            <a href="https://www.udemy.com/" class="tool-icon" target="_blank">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Udemy</span>
+                            </a>
+                            <a href="https://www.coursera.org/" class="tool-icon" target="_blank">
+                                <i class="fas fa-book-open"></i>
+                                <span>Coursera</span>
+                            </a>
+                            <a href="https://www.skillshare.com/" class="tool-icon" target="_blank">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Skillshare</span>
+                            </a>
+                    
+                            <a href="http://www.avasus.ufrn.br/" class="tool-icon" target="_blank">
+                                <i class="fas fa-user-md"></i>  <span>AVASUS</span>
+                            </a>
+                            <a href="https://escoladotrabalhador40.com.br/" class="tool-icon" target="_blank">
+                                <i class="fas fa-briefcase"></i> <span>Escola do Trabalhador 4.0</span>
+                            </a>
+                            <a href="http://www.educaweb.com.br/" class="tool-icon" target="_blank">
+                                <i class="fas fa-globe"></i> <span>EducaWeb</span>
+                            </a>
+                            <a href="https://maisbrasil.planejamento.gov.br/" class="tool-icon" target="_blank">
+                                <i class="fas fa-landmark"></i> <span>+Brasil</span>
+                            </a>
+                            <a href="https://etecbrasil.mec.gov.br/" class="tool-icon" target="_blank">
+                                <i class="fas fa-graduation-cap"></i> <span>e-Tec Brasil</span>
+                            </a>
+                            <a href="https://www.gov.br/mec/pt-br/redetecbrasil" class="tool-icon" target="_blank">
+                                <i class="fas fa-university"></i> <span>UAB</span>
+                            </a>
+                            <a href="https://brasilprofissionalizado.com.br/" class="tool-icon" target="_blank">
+                                 <i class="fas fa-tools"></i> <span>Brasil Profissionalizado</span>
+                            </a>
+                            <a href="https://www.gov.br/pt-br/servicos/inscrever-se-em-cursos-do-pronatec" class="tool-icon" target="_blank">
+                                <i class="fas fa-handshake"></i> <span>Pronatec</span>
+                            </a>
+                    
+                        </div>
+                    </div>
+    
+                    <!-- Seção 1: Agente de IA  -->
+                    <div class="category">
+                        <h2>Chatbots IA</h2>
+                        <div class="tools">
+                            <a  target="_blank"  href="https://www.tidio.com/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Tidio</span>
+                            </a>
+                            <a  target="_blank"  href="https://manychat.com/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>ManyChat</span>
+                            </a>
+                            <a  target="_blank"  href="https://openai.com/chatgpt" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>ChatGPT</span>
+                            </a>
+                            <a  target="_blank"  href="https://www.zendesk.com/chat/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Zendesk Chat</span>
+                            </a>
+                            <a  target="_blank"  href="https://www.freshworks.com/freshchat/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Freshchat</span>
+                            </a>
+                            <a  target="_blank"  href="https://n8n.io/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>n8n</span>
+                            </a>
+                            <a  target="_blank"  href="https://www.make.com/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Make</span>
+                            </a>
+                            <a  target="_blank"  href="https://www.blinkshot.io/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Blinkshot</span>
+                            </a>
+                            <a  target="_blank"  href="https://www.pikaart.com/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>PikaArt</span>
+                            </a>
+                            <a  target="_blank"  href="https://runwayml.com/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Runway</span>
+                            </a>
+                            <a  target="_blank"  href="https://kling.ai/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Kling AI</span>
+                            </a>
+                            <a  target="_blank"  href="https://deepseek.ai/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>DeepSeek</span>
+                            </a>
+                            <a  target="_blank"  href="https://blackbox.ai/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Blackbox</span>
+                            </a>
+                            <a  target="_blank"  href="https://gemini.com/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Gemini</span>
+                            </a>
+                            <a  target="_blank"  href="https://qwen.ai/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Qwen Max</span>
+                            </a>
+                            <a  target="_blank"  href="https://captions.ai/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Captions AI</span>
+                            </a>
+                            <a  target="_blank"  href="https://opusclip.com/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>OpusClip</span>
+                            </a>
+                            <a  target="_blank"  href="https://www.descript.com/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Descript</span>
+                            </a>
+                            <a  target="_blank"  href="https://www.veed.io/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Veed</span>
+                            </a>
+                            <a  target="_blank"  href="https://resolve.ai/" class="tool-icon">
+                                <i class="fas fa-robot"></i>
+                                <span>Resolve</span>
+                            </a>
+                        </div>
+                    </div>
+    
+                    <!-- Adicione mais seções conforme necessário -->
+                </div>
+        </section>
+
+        <!--=============== speed ===============-->
+        <section class="section section__height container" id="skills">
+            <h1>Qr code</h1>
+            
+            <div class="row">
+                <input type="color" class="light" value="#ffffff">
+                <input type="color" class="dark">
+                <select class="sizes">
+                    <option value="100">100×100</option>
+                    <option value="200">200×200</option>
+                    <option value="300">300×300</option>
+                    <option selected value="400">400×400</option>
+                    <option value="500">500×500</option>
+                    <option value="600">600×600</option>
+                    <option value="700">700×700</option>
+                    <option value="800">800×800</option>
+                    <option value="900">900×900</option>
+                    <option value="1000">1000×1000</option>
+                </select>
+            </div>
+            <input type="text" class="qr-text" placeholder="Enter QR Text">
+            <div id="qr-code"></div>
+            <div class="action-container">
+                <a href="#" class="download btn" download="QRCode">
+                    <span>Download</span>
+                    <img src="src/tools/download.svg" alt="">
+                </a>
+                <button class="btn share-btn">
+                    <span>Share</span>
+                    <img src="src/tools/share.svg" alt="">
+                </button>
+            </div>
+
+        </section>
+
+        <!--=============== CONTACT ===============-->
+        <section class="section section__height container" id="contact">
+            <h1>CONTACT</h1>
+
+       
+        </section>
+    </main>
+
+
+     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="src/tools/index.js"></script>
+    <script src="src/tools2/script.js"></script>
+      <!--=============== MAIN JS ===============-->
+      <script src="navbar/assets/js/main.js"></script>
+</body>
+</html>
