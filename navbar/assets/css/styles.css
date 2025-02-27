@@ -120,7 +120,7 @@ img {
 .nav__mask {
   width: 80px;
   height: 80px;
-  background: linear-gradient(224deg, #a22fe9 -2%, #ddaafe 97%);
+  background: linear-gradient(224deg, #2f5ae9 -2%, #b0aafe 97%);
   border-radius: 1.5rem;
   overflow: hidden;
   display: flex;
