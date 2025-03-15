@@ -4,9 +4,9 @@
     "description": "Ferramentas Web - As melhores Ferramentas para aumentas sua perfomance.",
     "icons": [
       {
-        "src": "assets/Ferramentas Web.jpg",
+        "src":  "assets/Tools.png",
         "sizes": "192x192",
-        "type": "image/jpg"
+        "type": "image/png"
       },
       {
         "src": "assets/Tools.png",

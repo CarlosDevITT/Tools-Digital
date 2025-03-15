@@ -16,61 +16,68 @@
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
             <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
+
     </head>
 <body>
+<!--=============== NAV ===============-->
+<nav class="nav" id="nav">
+    <div class="nav__menu container" id="nav-menu">
+        <div class="nav__shape"></div>
 
-  <!--=============== NAV ===============-->
-    <nav class="nav" id="nav">
-        <div class="nav__menu container" id="nav-menu">
-            <div class="nav__shape"></div>
-
-            <div class="nav__close" id="nav-close">
-                <i class='bx bx-x'></i>
-            </div>
-            
-            <div class="nav__data">
-                <div class="nav__mask">
-                    <!-- Change your profile picture -->
-                    <img src="assets/people.png" alt="" class="nav__img">
-                </div>
-            </div>
-
-            <ul class="nav__list">
-                <li class="nav__item">
-                    <a href="#home" class="nav__link active-link">
-                        <i class='bx bx-home' ></i> Notas 
-                    </a>
-                </li>
-                <li class="nav__item">
-                    <a href="#about" class="nav__link">
-                        <i class='bx bx-user'></i> Tools
-                    </a>
-                </li>
-                <li class="nav__item">
-                    <a href="#portfolio" class="nav__link">
-                        <i class='bx bx-briefcase-alt-2'></i> Ferramentas ON
-                    </a>
-                </li>
-                <li class="nav__item">
-                    <a href="#skills" class="nav__link">
-                        <i class='bx bx-bookmark'></i> Qr code
-                    </a>
-                </li>
-                <li class="nav__item">
-                    <a href="#contact" class="nav__link">
-                        <i class='bx bx-message-square-detail'></i> Financeiro
-                    </a>
-                </li>
-                <li class="nav__item">
-                    <a href="https://script.google.com/macros/s/AKfycbyaZj626-5zUvtyK4aD4jOVyzhyJ1HaEQ7yoAMk7M_tiWnYCwT_W2XgeGJJjE5VT0o0bQ/exec" target="_blank" class="nav__link">
-                        <i class='bx bx-message-square-detail'></i> Ticks Tools
-                    </a>
-                </li>
-            </ul>
+        <div class="nav__close" id="nav-close">
+            <i class='bx bx-x'></i>
         </div>
-    </nav>
+        
+        <div class="nav__data">
+            <div class="nav__mask">
+                <!-- Change your profile picture -->
+                <img src="assets/people.png" alt="" class="nav__img">
+            </div>
+        </div>
 
-   <!--=============== MAIN ===============-->
+        <ul class="nav__list">
+            <li class="nav__item">
+                <a href="#home" class="nav__link active-link">
+                    <i class='bx bx-home'></i> Notas 
+                </a>
+            </li>
+            <li class="nav__item">
+                <a href="#about" class="nav__link">
+                    <i class='bx bx-user'></i> Tools
+                </a>
+            </li>
+            <li class="nav__item">
+                <a href="#portfolio" class="nav__link">
+                    <i class='bx bx-briefcase-alt-2'></i> Ferramentas ON
+                </a>
+            </li>
+            <li class="nav__item">
+                <a href="#skills" class="nav__link">
+                    <i class='bx bx-bookmark'></i> Qr code
+                </a>
+            </li>
+            <li class="nav__item">
+                <a href="#contact" class="nav__link">
+                    <i class='bx bx-message-square-detail'></i> Financeiro
+                </a>
+            </li>
+            <li class="nav__item">
+                <a href="https://excalidraw.com/" class="nav__link">
+                    <i class='bx bx-message-square-detail'></i> Fluxo Tools
+                </a>
+            </li>
+            <li class="nav__item">
+                <a href="https://script.google.com/macros/s/AKfycbyaZj626-5zUvtyK4aD4jOVyzhyJ1HaEQ7yoAMk7M_tiWnYCwT_W2XgeGJJjE5VT0o0bQ/exec" target="_blank" class="nav__link">
+                    <i class='bx bx-message-square-detail'></i> Ticks Tools
+                </a>
+            </li>
+            <!-- Novo item para Sair -->
+            <a href="Sign-In-Sign-Up/index.html" id="logout-button" class="nav__link">
+                <i class='bx bx-log-out'></i> Sair
+            </a>
+        </ul>
+    </div>
+</nav>  <!--=============== MAIN ===============-->
     <main class="main" id="main">
         <!--=============== HEADER ===============-->
         <header class="header" id="header">

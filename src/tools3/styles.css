@@ -1,7 +1,7 @@
 :root {
     --dark-blue: #363f5f;
-    --green: rgb(6, 151, 25);
-    --light-green: #3dd705;
+    --green: rgb(6, 21, 151);
+    --light-green: #0524d7;
     --red: #e92929;
 }
 .container {
@@ -17,7 +17,7 @@ h2{
 }
 
 a{
-    color: #49AA26;
+    color: rgb(38, 155, 170);
     text-decoration: none;
 }
 
