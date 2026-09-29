@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#070b14"><meta name="description" content="Tools Digital — workspace operacional da States Softwares.">
+<meta name="theme-color" content="#000000"><meta name="description" content="Tools Digital — workspace operacional da States Softwares.">
 <link rel="manifest" href="./manifest.json"><link rel="icon" href="./assets/IMG_0162.JPG">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -15,6 +15,8 @@
 <nav id="nav">
 <button class="nav-item active" data-view="dashboard">⌂ <span>Dashboard</span></button>
 <button class="nav-item" data-view="tools">◫ <span>Ferramentas</span></button>
+<button class="nav-item" data-view="projects">◇ <span>Projetos</span></button>
+<button class="nav-item" data-view="qrcode">▦ <span>QR Code</span></button>
 <button class="nav-item" data-view="notes">✎ <span>Notas</span></button>
 <button class="nav-item" data-view="finance">◉ <span>Financeiro</span></button>
 </nav>
@@ -23,7 +25,7 @@
 <main class="main">
 <header class="topbar"><button class="mobile-menu" id="menuBtn" aria-label="Menu">☰</button><button class="command-trigger" id="commandBtn">⌕ <span>Buscar ferramentas e ações...</span><kbd>Ctrl K</kbd></button><div class="avatar">TD</div></header>
 <section id="view" class="view"></section>
-</main></div>
+</main></div><nav class="bottom-nav" aria-label="Navegação mobile"><button data-view="dashboard">⌂<span>Início</span></button><button data-view="tools">◫<span>Tools</span></button><button data-view="projects">◇<span>Projetos</span></button><button data-view="qrcode">▦<span>QR</span></button></nav>
 <div class="command-overlay" id="commandOverlay" hidden><div class="command-box"><input id="commandInput" placeholder="Digite uma ferramenta ou ação..." autocomplete="off"><div id="commandResults"></div><small>↑↓ navegar · Enter abrir · Esc fechar</small></div></div>
 <div id="toast" class="toast" role="status"></div>
 <script type="module" src="./src/main.js"></script>
