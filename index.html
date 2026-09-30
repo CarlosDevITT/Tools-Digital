@@ -20,13 +20,14 @@
 <button class="nav-item" data-view="qrcode">▦ <span>QR Code</span></button>
 <button class="nav-item" data-view="notes">✎ <span>Notas</span></button>
 <button class="nav-item" data-view="finance">◉ <span>Financeiro</span></button>
+<button class="nav-item" data-view="account">◎ <span>Conta</span></button>
 </nav>
 <div class="sidebar-footer"><button id="updateBtn" class="update-btn" type="button"><span class="status-dot"></span><span id="updateLabel">Buscar atualizações</span></button><small id="appVersion">Workspace local</small></div>
 </aside>
 <main class="main">
-<header class="topbar"><button class="mobile-menu" id="menuBtn" aria-label="Menu">☰</button><button class="command-trigger" id="commandBtn">⌕ <span>Buscar ferramentas e ações...</span><kbd>Ctrl K</kbd></button><div class="avatar">TD</div></header>
+<header class="topbar"><button class="mobile-menu" id="menuBtn" aria-label="Menu">☰</button><button class="command-trigger" id="commandBtn">⌕ <span>Buscar ferramentas e ações...</span><kbd>Ctrl K</kbd></button><button class="avatar" id="accountBtn" type="button" aria-label="Minha conta">TD</button></header>
 <section id="view" class="view"></section>
-</main></div><nav class="bottom-nav" aria-label="Navegação mobile"><button data-view="dashboard">⌂<span>Início</span></button><button data-view="tools">◫<span>Tools</span></button><button data-view="flow">⌁<span>Fluxo</span></button><button id="moreBtn" type="button">•••<span>Mais</span></button></nav><div class="more-sheet" id="moreSheet" hidden><button data-view="projects">◇ <span>Projetos</span></button><button data-view="qrcode">▦ <span>QR Code</span></button><button data-view="notes">✎ <span>Notas</span></button><button data-view="finance">◉ <span>Financeiro</span></button></div>
+</main></div><nav class="bottom-nav" aria-label="Navegação mobile"><button data-view="dashboard">⌂<span>Início</span></button><button data-view="tools">◫<span>Tools</span></button><button data-view="flow">⌁<span>Fluxo</span></button><button id="moreBtn" type="button">•••<span>Mais</span></button></nav><div class="more-sheet" id="moreSheet" hidden><button data-view="projects">◇ <span>Projetos</span></button><button data-view="qrcode">▦ <span>QR Code</span></button><button data-view="notes">✎ <span>Notas</span></button><button data-view="finance">◉ <span>Financeiro</span></button><button data-view="account">◎ <span>Conta</span></button></div>
 <div class="command-overlay" id="commandOverlay" hidden><div class="command-box"><input id="commandInput" placeholder="Digite uma ferramenta ou ação..." autocomplete="off"><div id="commandResults"></div><small>↑↓ navegar · Enter abrir · Esc fechar</small></div></div>
 <div id="toast" class="toast" role="status"></div>
 <script type="module" src="./src/main.js"></script>
