@@ -1,10 +1,10 @@
-const CACHE="tools-digital-v4-0-1";
+const CACHE="tools-digital-v4-1-0";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=4.0.1",
-  "./src/main.js?v=4.0.1",
-  "./src/services/neon.js?v=4.0.1",
+  "./styles.css?v=4.1.0",
+  "./src/main.js?v=4.1.0",
+  "./src/services/neon.js?v=4.1.0",
   "./src/data/tools.js",
   "./src/modules/flow-tools.js","./src/modules/session.js","./src/modules/projects.js","./src/modules/bootstrap.js",
   "./manifest.json",
