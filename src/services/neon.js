@@ -51,3 +51,14 @@ export async function pushCloud(snapshot){
  for(const [id,count] of Object.entries(snapshot.usage||{})){const row={owner_id:owner,tool_id:id,access_count:Number(count)||0,last_accessed_at:new Date().toISOString()};const r=remoteUsage.has(id)?await neon.from("tool_usage").update(row).eq("tool_id",id):await neon.from("tool_usage").insert(row);if(r.error)throw r.error}
  return true
 }
+export async function cloudCounts(){
+ const s=await getSession();if(!s)return null;
+ const [n,t,f,u]=await Promise.all([
+  neon.from("notes").select("id"),
+  neon.from("transactions").select("id"),
+  neon.from("favorites").select("tool_id"),
+  neon.from("tool_usage").select("tool_id")
+ ]);
+ for(const r of [n,t,f,u])if(r.error)throw r.error;
+ return {notes:n.data?.length||0,transactions:t.data?.length||0,favorites:f.data?.length||0,usage:u.data?.length||0}
+}
