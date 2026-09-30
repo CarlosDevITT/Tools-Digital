@@ -1,10 +1,10 @@
 import { createClient } from "https://esm.sh/@neondatabase/neon-js@0.7.0-beta?bundle";
-import { createAuthClient } from "https://esm.sh/@neondatabase/neon-js@0.7.0-beta/auth?bundle";
+import { createAuthClient } from "https://esm.sh/better-auth/client?bundle";
 
 const DATA_API_URL="https://ep-shy-hall-b4tnu7jl.apirest.c-6.us-east-2.aws.neon.tech/neondb/rest/v1";
 const AUTH_URL="https://ep-shy-hall-b4tnu7jl.neonauth.c-6.us-east-2.aws.neon.tech/neondb/auth";
 export const neon=createClient(DATA_API_URL);
-export const auth=createAuthClient(AUTH_URL);
+export const auth=createAuthClient({baseURL:AUTH_URL});
 
 export async function getSession(){const {data,error}=await auth.getSession();if(error)throw error;return data?.session?data:null}
 export async function signIn(email,password){const r=await auth.signIn.email({email,password,rememberMe:true});if(r.error)throw r.error;return r.data}
