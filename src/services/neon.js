@@ -39,27 +39,24 @@ export async function pullCloud(){
  for(const r of [notes,tx,favs,usage])if(r.error)throw r.error;
  return {user:s.user,notes:(notes.data||[]).map(n=>({id:n.id,title:n.title,body:n.body,tags:n.tags||[],pinned:n.pinned,favorite:n.favorite,createdAt:Date.parse(n.created_at),updatedAt:Date.parse(n.updated_at)})),transactions:(tx.data||[]).map(t=>({id:t.id,description:t.description,category:t.category,amount:(t.type==="out"?-1:1)*Number(t.amount_cents),createdAt:Date.parse(t.created_at),updatedAt:Date.parse(t.updated_at)})),favorites:(favs.data||[]).map(x=>x.tool_id),usage:Object.fromEntries((usage.data||[]).map(x=>[x.tool_id,Number(x.access_count)]))}
 }
-async function mirror(table,rows,owner){
- const current=await neon.from(table).select("id");if(current.error)throw current.error;
- const ids=new Set((current.data||[]).map(x=>x.id));
+async function upsertRows(table,rows){
  for(const row of rows){
-  if(ids.has(row.id)){const {id,...patch}=row;const r=await neon.from(table).update(patch).eq("id",id);if(r.error)throw r.error;ids.delete(id)}
-  else {const r=await neon.from(table).insert(row);if(r.error)throw r.error}
+  const exists=await neon.from(table).select("id").eq("id",row.id).maybeSingle();if(exists.error)throw exists.error;
+  const r=exists.data?await neon.from(table).update(row).eq("id",row.id):await neon.from(table).insert(row);if(r.error)throw r.error
  }
- for(const id of ids){const r=await neon.from(table).delete().eq("id",id);if(r.error)throw r.error}
 }
 export async function pushCloud(snapshot){
  const s=await getSession();if(!s)return false;const owner=s.user.id;
  const notes=(snapshot.notes||[]).map(n=>noteRow(n,owner)),transactions=(snapshot.transactions||[]).map(t=>txRow(t,owner));
- await mirror("notes",notes,owner);await mirror("transactions",transactions,owner);
- const fr=await neon.from("favorites").select("tool_id");if(fr.error)throw fr.error;
- const remoteFav=new Set((fr.data||[]).map(x=>x.tool_id)),localFav=new Set(snapshot.favorites||[]);
- for(const id of localFav)if(!remoteFav.has(id)){const r=await neon.from("favorites").insert({owner_id:owner,tool_id:id});if(r.error)throw r.error}
- for(const id of remoteFav)if(!localFav.has(id)){const r=await neon.from("favorites").delete().eq("tool_id",id);if(r.error)throw r.error}
+ await upsertRows("notes",notes);await upsertRows("transactions",transactions);
+ const fr=await neon.from("favorites").select("tool_id");if(fr.error)throw fr.error;const remoteFav=new Set((fr.data||[]).map(x=>x.tool_id));
+ for(const id of snapshot.favorites||[])if(!remoteFav.has(id)){const r=await neon.from("favorites").insert({owner_id:owner,tool_id:id});if(r.error)throw r.error}
  const ur=await neon.from("tool_usage").select("tool_id");if(ur.error)throw ur.error;const remoteUsage=new Set((ur.data||[]).map(x=>x.tool_id));
  for(const [id,count] of Object.entries(snapshot.usage||{})){const row={owner_id:owner,tool_id:id,access_count:Number(count)||0,last_accessed_at:new Date().toISOString()};const r=remoteUsage.has(id)?await neon.from("tool_usage").update(row).eq("tool_id",id):await neon.from("tool_usage").insert(row);if(r.error)throw r.error}
  return true
 }
+export async function deleteCloudRecord(table,id){if(!["notes","transactions"].includes(table)||!validUuid(id))return false;const s=await getSession();if(!s)return false;const r=await neon.from(table).delete().eq("id",id).eq("owner_id",s.user.id);if(r.error)throw r.error;return true}
+export async function deleteCloudFavorite(toolId){const s=await getSession();if(!s)return false;const r=await neon.from("favorites").delete().eq("owner_id",s.user.id).eq("tool_id",toolId);if(r.error)throw r.error;return true}
 export async function cloudCounts(){
  const s=await getSession();if(!s)return null;
  const [n,t,f,u]=await Promise.all([
