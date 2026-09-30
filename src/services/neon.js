@@ -23,7 +23,7 @@ const uuid=()=>crypto.randomUUID();
 export const makeCloudId=uuid;
 
 function noteRow(n,owner){
- return {id:n.id,owner_id:owner,title:n.title||"",body:n.body||"",tags:Array.isArray(n.tags)?n.tags:[],pinned:!!n.pinned,favorite:!!n.favorite,created_at:iso(n.createdAt),updated_at:iso(n.updatedAt||n.createdAt)}
+ return {id:n.id,owner_id:owner,title:n.title||"",body:n.body||"",type:["book","event","concept","project","moc"].includes(n.type)?n.type:"concept",properties:n.properties&&typeof n.properties==="object"?n.properties:{},tags:Array.isArray(n.tags)?n.tags:[],pinned:!!n.pinned,favorite:!!n.favorite,created_at:iso(n.createdAt),updated_at:iso(n.updatedAt||n.createdAt)}
 }
 function txRow(t,owner){
  const amount=Math.abs(Number(t.amount||0));
@@ -38,7 +38,7 @@ export async function pullCloud(){
   neon.from("tool_usage").select("*")
  ]);
  for(const r of [notes,tx,favs,usage])if(r.error)throw r.error;
- return {user:s.user,notes:(notes.data||[]).map(n=>({id:n.id,title:n.title,body:n.body,tags:n.tags||[],pinned:n.pinned,favorite:n.favorite,createdAt:Date.parse(n.created_at),updatedAt:Date.parse(n.updated_at)})),transactions:(tx.data||[]).map(t=>({id:t.id,description:t.description,category:t.category,amount:(t.type==="out"?-1:1)*Number(t.amount_cents),createdAt:Date.parse(t.created_at),updatedAt:Date.parse(t.updated_at)})),favorites:(favs.data||[]).map(x=>x.tool_id),usage:Object.fromEntries((usage.data||[]).map(x=>[x.tool_id,Number(x.access_count)]))}
+ return {user:s.user,notes:(notes.data||[]).map(n=>({id:n.id,title:n.title,body:n.body,type:n.type||"concept",properties:n.properties||{},tags:n.tags||[],pinned:n.pinned,favorite:n.favorite,createdAt:Date.parse(n.created_at),updatedAt:Date.parse(n.updated_at)})),transactions:(tx.data||[]).map(t=>({id:t.id,description:t.description,category:t.category,amount:(t.type==="out"?-1:1)*Number(t.amount_cents),createdAt:Date.parse(t.created_at),updatedAt:Date.parse(t.updated_at)})),favorites:(favs.data||[]).map(x=>x.tool_id),usage:Object.fromEntries((usage.data||[]).map(x=>[x.tool_id,Number(x.access_count)]))}
 }
 async function upsertRows(table,rows){
  for(const row of rows){
@@ -60,6 +60,11 @@ export async function deleteCloudRecord(table,id){if(!["notes","transactions"].i
 export async function deleteCloudFavorite(toolId){const s=await getSession();if(!s)return false;const r=await neon.from("favorites").delete().eq("owner_id",s.user.id).eq("tool_id",toolId);if(r.error)throw r.error;return true}
 export async function replaceCloudFavorites(toolIds=[]){const s=await getSession();if(!s)return false;const cur=await neon.from("favorites").select("tool_id");if(cur.error)throw cur.error;const remote=new Set((cur.data||[]).map(x=>x.tool_id)),local=new Set(toolIds);for(const id of local)if(!remote.has(id)){const r=await neon.from("favorites").insert({owner_id:s.user.id,tool_id:id});if(r.error)throw r.error}for(const id of remote)if(!local.has(id)){const r=await neon.from("favorites").delete().eq("owner_id",s.user.id).eq("tool_id",id);if(r.error)throw r.error}return true}
 
+export async function saveKnowledgeNote(note){const s=await getSession();if(!s)throw new Error("Sessão necessária");if(!note?.id||!note?.title)throw new Error("Nota inválida");await upsertRows("notes",[noteRow(note,s.user.id)]);return note}
+export async function syncNoteLinks(noteId,titles=[]){const s=await getSession();if(!s)throw new Error("Sessão necessária");if(!validUuid(noteId))throw new Error("ID de nota inválido");const clean=[...new Set((titles||[]).map(x=>String(x).trim().toLocaleLowerCase()).filter(Boolean))];const all=await neon.from("notes").select("id,title").neq("id",noteId);if(all.error)throw all.error;const targets=(all.data||[]).filter(n=>clean.includes((n.title||"").trim().toLocaleLowerCase()));const del=await neon.from("note_links").delete().eq("source_note_id",noteId).eq("owner_id",s.user.id);if(del.error)throw del.error;for(const target of targets){const r=await neon.from("note_links").insert({owner_id:s.user.id,source_note_id:noteId,target_note_id:target.id});if(r.error)throw r.error}return targets}
+export async function getNoteBacklinks(noteId){const s=await getSession();if(!s)return[];const lr=await neon.from("note_links").select("source_note_id").eq("target_note_id",noteId);if(lr.error)throw lr.error;const ids=[...new Set((lr.data||[]).map(x=>x.source_note_id))];if(!ids.length)return[];const nr=await neon.from("notes").select("id,title,type,tags,updated_at").in("id",ids);if(nr.error)throw nr.error;return nr.data||[]}
+export async function getKnowledgeGraph(){const s=await getSession();if(!s)return{nodes:[],links:[]};const [nr,lr]=await Promise.all([neon.from("notes").select("id,title,type,tags"),neon.from("note_links").select("source_note_id,target_note_id")]);if(nr.error)throw nr.error;if(lr.error)throw lr.error;return{nodes:(nr.data||[]).map(n=>({id:n.id,title:n.title||"Sem título",type:n.type||"concept",tags:n.tags||[]})),links:(lr.data||[]).map(l=>({source:l.source_note_id,target:l.target_note_id}))}}
+export async function searchKnowledgeNotes(query=""){const s=await getSession();if(!s)return[];const q=String(query).trim();let req=neon.from("notes").select("id,title,body,type,tags,properties,created_at,updated_at").order("updated_at",{ascending:false}).limit(100);if(q)req=req.or("title.ilike.%"+q.replace(/[%_,]/g,"")+"%,body.ilike.%"+q.replace(/[%_,]/g,"")+"%");const r=await req;if(r.error)throw r.error;return r.data||[]}
 export async function cloudCounts(){
  const s=await getSession();if(!s)return null;
  const [n,t,f,u]=await Promise.all([
