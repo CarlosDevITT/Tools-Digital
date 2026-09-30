@@ -100,7 +100,6 @@ async function authenticate(mode){
 }
 function authMessage(e){const m=String(e?.message||e||"").toLowerCase();if(m.includes("already")||m.includes("exist")||m.includes("registered"))return"Este e-mail já possui uma conta.";if(m.includes("invalid")||m.includes("credential")||m.includes("password"))return"E-mail ou senha inválidos.";if(m.includes("network")||m.includes("fetch"))return"Não foi possível conectar ao servidor. Verifique sua internet.";return e?.message||"Não foi possível concluir a autenticação."}
 let authMode="login";
-async function authDialog(){authMode="login";render()}
 
 
 
