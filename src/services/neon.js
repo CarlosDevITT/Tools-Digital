@@ -62,3 +62,25 @@ export async function cloudCounts(){
  for(const r of [n,t,f,u])if(r.error)throw r.error;
  return {notes:n.data?.length||0,transactions:t.data?.length||0,favorites:f.data?.length||0,usage:u.data?.length||0}
 }
+
+export async function getProfile(){
+ const s=await getSession();if(!s)return null;const r=await neon.from("profiles").select("*").eq("auth_user_id",s.user.id).maybeSingle();if(r.error)throw r.error;return r.data
+}
+export async function saveProfile(input={}){
+ const s=await getSession();if(!s)throw new Error("Sessão necessária");const row={auth_user_id:s.user.id,display_name:(input.display_name||"").trim()||s.user.name||"",avatar_url:(input.avatar_url||"").trim()||null};
+ const current=await neon.from("profiles").select("id").eq("auth_user_id",s.user.id).maybeSingle();if(current.error)throw current.error;
+ const r=current.data?await neon.from("profiles").update(row).eq("auth_user_id",s.user.id).select("*").single():await neon.from("profiles").insert(row).select("*").single();if(r.error)throw r.error;return r.data
+}
+export async function listWorkspaces(){const s=await getSession();if(!s)return[];const r=await neon.from("workspaces").select("*").order("updated_at",{ascending:false});if(r.error)throw r.error;return r.data||[]}
+export async function saveWorkspace(input={}){
+ const s=await getSession();if(!s)throw new Error("Sessão necessária");const name=(input.name||"").trim();if(!name)throw new Error("Nome obrigatório");const slug=(input.slug||name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,64)||"workspace";
+ const row={owner_id:s.user.id,name,slug};let r;if(input.id)r=await neon.from("workspaces").update(row).eq("id",input.id).select("*").single();else r=await neon.from("workspaces").insert(row).select("*").single();if(r.error)throw r.error;return r.data
+}
+export async function deleteWorkspace(id){const r=await neon.from("workspaces").delete().eq("id",id);if(r.error)throw r.error}
+export async function listCloudProjects(){const s=await getSession();if(!s)return[];const r=await neon.from("projects").select("*").order("updated_at",{ascending:false});if(r.error)throw r.error;return r.data||[]}
+export async function saveCloudProject(input={}){
+ const s=await getSession();if(!s)throw new Error("Sessão necessária");const row={owner_id:s.user.id,workspace_id:input.workspace_id||null,name:(input.name||"").trim(),description:(input.description||"").trim(),status:input.status||"active",links:Array.isArray(input.links)?input.links:[]};if(!row.name)throw new Error("Nome obrigatório");const r=input.id?await neon.from("projects").update(row).eq("id",input.id).select("*").single():await neon.from("projects").insert(row).select("*").single();if(r.error)throw r.error;return r.data
+}
+export async function deleteCloudProject(id){const r=await neon.from("projects").delete().eq("id",id);if(r.error)throw r.error}
+export async function listActivity(){const s=await getSession();if(!s)return[];const r=await neon.from("activity_logs").select("*").order("created_at",{ascending:false}).limit(100);if(r.error)throw r.error;return r.data||[]}
+export async function addActivity(module,action,label="",metadata={}){const s=await getSession();if(!s)return;const r=await neon.from("activity_logs").insert({owner_id:s.user.id,module,action,label,metadata});if(r.error)throw r.error}
