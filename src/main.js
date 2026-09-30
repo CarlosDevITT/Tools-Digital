@@ -1,11 +1,11 @@
-import{tools}from"./data/tools.js?v=5.2.0";
-import{mountFlow}from"./modules/flow-tools.js?v=5.2.0";
-import{restoreSession as restoreUserSession,clearSessionState}from"./modules/session.js?v=5.2.0";
-import{projectSource,projectsEmpty}from"./modules/projects.js?v=5.2.0";
-import{bootstrapApp}from"./modules/bootstrap.js?v=5.2.0";
-import{secondBrainView,mountSecondBrain}from"./modules/second-brain.js?v=5.2.0";
+import{tools}from"./data/tools.js?v=5.3.0";
+import{mountFlow}from"./modules/flow-tools.js?v=5.3.0";
+import{restoreSession as restoreUserSession,clearSessionState}from"./modules/session.js?v=5.3.0";
+import{projectSource,projectsEmpty}from"./modules/projects.js?v=5.3.0";
+import{bootstrapApp}from"./modules/bootstrap.js?v=5.3.0";
+import{secondBrainView,mountSecondBrain}from"./modules/second-brain.js?v=5.3.0";
 import{financeScopeTabs,companyManagerHtml,defaultCategories,familyWorkspace,memberManagerHtml,accountManagerHtml,familyOnboardingHtml,inviteCreatedHtml}from"./modules/finance.js?v=5.3.0";
-import{getSession,signIn,signUp,signOut,pullCloud,pushCloud,cloudCounts,getProfile,saveProfile,listWorkspaces,saveWorkspace,deleteWorkspace,listCloudProjects,saveCloudProject,deleteCloudProject,listActivity,addActivity,listFlows,saveFlowDocument,deleteFlowDocument,deleteCloudRecord,deleteCloudFavorite,replaceCloudFavorites,makeCloudId,saveKnowledgeNote,syncNoteLinks,getNoteBacklinks,getKnowledgeGraph,searchKnowledgeNotes,listFinanceEntities,saveFinanceEntity,deleteFinanceEntity,listFinanceMembers,saveFinanceMember,deleteFinanceMember,listFinanceAccounts,saveFinanceAccount,deleteFinanceAccount,createFinanceInvite,listFinanceInvites,getFinanceInvite,acceptFinanceInvite,listSettings,saveSettings,requestPasswordReset}from"./services/neon.js?v=5.2.0";
+import{getSession,signIn,signUp,signOut,pullCloud,pushCloud,cloudCounts,getProfile,saveProfile,listWorkspaces,saveWorkspace,deleteWorkspace,listCloudProjects,saveCloudProject,deleteCloudProject,listActivity,addActivity,listFlows,saveFlowDocument,deleteFlowDocument,deleteCloudRecord,deleteCloudFavorite,replaceCloudFavorites,makeCloudId,saveKnowledgeNote,syncNoteLinks,getNoteBacklinks,getKnowledgeGraph,searchKnowledgeNotes,listFinanceEntities,saveFinanceEntity,deleteFinanceEntity,listFinanceMembers,saveFinanceMember,deleteFinanceMember,listFinanceAccounts,saveFinanceAccount,deleteFinanceAccount,createFinanceInvite,listFinanceInvites,getFinanceInvite,acceptFinanceInvite,listSettings,saveSettings,requestPasswordReset}from"./services/neon.js?v=5.3.0";
 const $=s=>document.querySelector(s),store={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set:(k,v)=>localStorage.setItem(k,JSON.stringify(v))};
 let view="account",category="Todos",financeScope=store.get("td:finance:scope","personal"),financeEntities=[],financeMembers=[],financeAccounts=[],financeInvites=[],financeMemberFilter=store.get("td:finance:member","all");
 const projects=[
