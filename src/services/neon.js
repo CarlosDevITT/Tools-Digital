@@ -1,12 +1,15 @@
 import { createClient } from "https://esm.sh/@neondatabase/neon-js@0.7.0-beta?bundle";
+import { createAuthClient } from "https://esm.sh/@neondatabase/neon-js@0.7.0-beta/auth?bundle";
 
-const NEON_URL="https://ep-shy-hall-b4tnu7jl.neonauth.c-6.us-east-2.aws.neon.tech/neondb/auth";
-export const neon=createClient(NEON_URL);
+const DATA_API_URL="https://ep-shy-hall-b4tnu7jl.apirest.c-6.us-east-2.aws.neon.tech/neondb/rest/v1";
+const AUTH_URL="https://ep-shy-hall-b4tnu7jl.neonauth.c-6.us-east-2.aws.neon.tech/neondb/auth";
+export const neon=createClient(DATA_API_URL);
+export const auth=createAuthClient(AUTH_URL);
 
-export async function getSession(){const {data,error}=await neon.auth.getSession();if(error)throw error;return data?.session?data:null}
-export async function signIn(email,password){const r=await neon.auth.signIn.email({email,password,rememberMe:true});if(r.error)throw r.error;return r.data}
-export async function signUp(name,email,password){const r=await neon.auth.signUp.email({name,email,password});if(r.error)throw r.error;return r.data}
-export async function signOut(){const r=await neon.auth.signOut();if(r?.error)throw r.error}
+export async function getSession(){const {data,error}=await auth.getSession();if(error)throw error;return data?.session?data:null}
+export async function signIn(email,password){const r=await auth.signIn.email({email,password,rememberMe:true});if(r.error)throw r.error;return r.data}
+export async function signUp(name,email,password){const r=await auth.signUp.email({name,email,password});if(r.error)throw r.error;return r.data}
+export async function signOut(){const r=await auth.signOut();if(r?.error)throw r.error}
 
 const iso=n=>new Date(n||Date.now()).toISOString();
 const validUuid=v=>/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v||"");
@@ -95,4 +98,4 @@ export async function deleteFlowDocument(id){if(!validUuid(id))return;const r=aw
 export async function listSettings(){const s=await getSession();if(!s)return{};const r=await neon.from("user_settings").select("settings").eq("owner_id",s.user.id).maybeSingle();if(r.error)throw r.error;return r.data?.settings||{}}
 export async function saveSettings(settings){const s=await getSession();if(!s)return;const row={owner_id:s.user.id,settings,updated_at:new Date().toISOString()};const cur=await neon.from("user_settings").select("owner_id").eq("owner_id",s.user.id).maybeSingle();if(cur.error)throw cur.error;const r=cur.data?await neon.from("user_settings").update(row).eq("owner_id",s.user.id):await neon.from("user_settings").insert(row);if(r.error)throw r.error}
 export async function migrateProjects(seed=[]){const s=await getSession();if(!s)return[];const current=await listCloudProjects();if(current.length)return current;for(const p of seed){const r=await neon.from("projects").insert({owner_id:s.user.id,name:p.name,description:p.description||"",status:(p.status||"").toLowerCase().includes("operacional")?"active":"active",links:(p.links||[]).map(([label,url])=>({label,url}))});if(r.error)throw r.error}return listCloudProjects()}
-export async function requestPasswordReset(email,redirectTo=location.href){const r=await neon.auth.requestPasswordReset({email,redirectTo});if(r?.error)throw r.error;return r?.data}
+export async function requestPasswordReset(email,redirectTo=location.href){const r=await auth.requestPasswordReset({email,redirectTo});if(r?.error)throw r.error;return r?.data}
