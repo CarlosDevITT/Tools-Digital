@@ -1,6 +1,6 @@
 import { createClient } from "https://esm.sh/@neondatabase/neon-js@0.7.0-beta?bundle";
 
-const NEON_URL="https://ep-shy-hall-b4tnu7jl.c-6.us-east-2.aws.neon.tech/neondb";
+const NEON_URL="https://ep-shy-hall-b4tnu7jl.neonauth.c-6.us-east-2.aws.neon.tech/neondb/auth";
 export const neon=createClient(NEON_URL);
 
 export async function getSession(){const {data,error}=await neon.auth.getSession();if(error)throw error;return data?.session?data:null}
