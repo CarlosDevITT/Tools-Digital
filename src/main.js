@@ -21,12 +21,12 @@ async function hydrateCloud({firstSync=false}={}){try{
  const hasCloud=counts&&(counts.notes||counts.transactions||counts.favorites||counts.usage);
  if(firstSync&&hasLocal&&!hasCloud){await pushCloud(cloudSnapshot());store.set("td:neon:migrated",true);toast("Dados locais enviados para o Neon");return}
  const cloud=await pullCloud();if(!cloud)return;state.session={user:cloud.user};
- if(cloud.notes.length||!state.notes.length){state.notes=cloud.notes;store.set("td:notes",state.notes)}
- if(cloud.transactions.length||!state.transactions.length){state.transactions=cloud.transactions;store.set("td:transactions",state.transactions)}
- if(cloud.favorites.length||!state.favorites.size){state.favorites=new Set(cloud.favorites);store.set("td:favorites",cloud.favorites)}
- if(Object.keys(cloud.usage).length||!Object.keys(state.usage).length){state.usage=cloud.usage;store.set("td:usage",state.usage)}
+ state.notes=cloud.notes;store.set("td:notes",state.notes)
+ state.transactions=cloud.transactions;store.set("td:transactions",state.transactions)
+ state.favorites=new Set(cloud.favorites);store.set("td:favorites",cloud.favorites)
+ state.usage=cloud.usage;store.set("td:usage",state.usage)
  if(firstSync)store.set("td:neon:migrated",true);render()
- }catch(e){console.warn("Neon hydrate:",e);if(firstSync)toast("Falha ao sincronizar com Neon","error")}}
+ }catch(e){console.error("Neon hydrate:",e);toast(e?.message||"Falha ao sincronizar com Neon","error")}}
 function audit(module,action,label){state.activity.unshift({id:crypto.randomUUID?.()||String(Date.now()),module,action,label,at:Date.now()});state.activity=state.activity.slice(0,100);store.set("td:activity",state.activity);if(state.session)addActivity(module,action,label).catch(()=>{})}
 const esc=s=>{const d=document.createElement("div");d.textContent=s??"";return d.innerHTML};
 function toolCard(t){const uses=state.usage[t.id]||0;return `<article class="card tool-card" data-open="${t.id}" tabindex="0" role="button" aria-label="Abrir ${esc(t.name)}"><button class="fav ${state.favorites.has(t.id)?"on":""}" data-fav="${t.id}" aria-label="Favoritar">★</button><div class="tool-icon">${esc(t.icon)}</div><span class="tool-category">${esc(t.category)}</span><h3>${esc(t.name)}</h3><p>${esc(t.description)}</p><small class="tool-usage">${uses?`${uses} ${uses===1?"acesso":"acessos"}`:"Ainda não usado"} · Abrir ↗</small></article>`}
