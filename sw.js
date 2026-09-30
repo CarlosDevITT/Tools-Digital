@@ -1,12 +1,12 @@
-const CACHE="tools-digital-v4-2-0";
+const CACHE="tools-digital-v4-2-1";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=4.2.0",
-  "./src/main.js?v=4.2.0",
-  "./src/services/neon.js?v=4.2.0",
-  "./src/data/tools.js",
-  "./src/modules/flow-tools.js","./src/modules/session.js","./src/modules/projects.js","./src/modules/bootstrap.js",
+  "./styles.css?v=4.2.1",
+  "./src/main.js?v=4.2.1",
+  "./src/services/neon.js?v=4.2.1",
+  "./src/data/tools.js?v=4.2.1",
+  "./src/modules/flow-tools.js?v=4.2.1","./src/modules/session.js?v=4.2.1","./src/modules/projects.js?v=4.2.1","./src/modules/bootstrap.js?v=4.2.1",
   "./manifest.json",
   "./assets/IMG_0162.JPG"
 ];
