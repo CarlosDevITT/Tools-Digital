@@ -1,12 +1,13 @@
-const CACHE="tools-digital-v4-2-2";
+const CACHE="tools-digital-v5-0-0";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=4.2.2",
-  "./src/main.js?v=4.2.2",
-  "./src/services/neon.js?v=4.2.2",
-  "./src/data/tools.js?v=4.2.2",
-  "./src/modules/flow-tools.js?v=4.2.2","./src/modules/session.js?v=4.2.2","./src/modules/projects.js?v=4.2.2","./src/modules/bootstrap.js?v=4.2.2",
+  "./styles.css?v=5.0.0",
+  "./src/main.js?v=5.0.0",
+  "./src/services/neon.js?v=5.0.0",
+  "./src/data/tools.js?v=5.0.0",
+  "./src/modules/flow-tools.js?v=5.0.0","./src/modules/session.js?v=5.0.0","./src/modules/projects.js?v=5.0.0","./src/modules/bootstrap.js?v=5.0.0",
+  "./src/modules/second-brain.js?v=5.0.0","./src/modules/wikilinks.js","./src/modules/markdown.js","./src/modules/note-templates.js","./src/modules/knowledge-graph.js",
   "./manifest.json",
   "./assets/IMG_0162.JPG"
 ];
