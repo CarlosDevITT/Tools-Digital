@@ -91,3 +91,8 @@ export async function saveFlowDocument(flow){
  let r;if(validUuid(flow.id))r=await neon.from("flows").update(row).eq("id",flow.id).select("*").maybeSingle();if(!r?.data)r=await neon.from("flows").insert(row).select("*").single();if(r.error)throw r.error;return r.data
 }
 export async function deleteFlowDocument(id){if(!validUuid(id))return;const r=await neon.from("flows").delete().eq("id",id);if(r.error)throw r.error}
+
+export async function listSettings(){const s=await getSession();if(!s)return{};const r=await neon.from("user_settings").select("settings").eq("owner_id",s.user.id).maybeSingle();if(r.error)throw r.error;return r.data?.settings||{}}
+export async function saveSettings(settings){const s=await getSession();if(!s)return;const row={owner_id:s.user.id,settings,updated_at:new Date().toISOString()};const cur=await neon.from("user_settings").select("owner_id").eq("owner_id",s.user.id).maybeSingle();if(cur.error)throw cur.error;const r=cur.data?await neon.from("user_settings").update(row).eq("owner_id",s.user.id):await neon.from("user_settings").insert(row);if(r.error)throw r.error}
+export async function migrateProjects(seed=[]){const s=await getSession();if(!s)return[];const current=await listCloudProjects();if(current.length)return current;for(const p of seed){const r=await neon.from("projects").insert({owner_id:s.user.id,name:p.name,description:p.description||"",status:(p.status||"").toLowerCase().includes("operacional")?"active":"active",links:(p.links||[]).map(([label,url])=>({label,url}))});if(r.error)throw r.error}return listCloudProjects()}
+export async function requestPasswordReset(email,redirectTo=location.href){const r=await neon.auth.requestPasswordReset({email,redirectTo});if(r?.error)throw r.error;return r?.data}
