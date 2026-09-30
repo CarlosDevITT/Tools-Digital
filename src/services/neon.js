@@ -12,10 +12,10 @@ export const neon=createClient({
 });
 export const auth=neon.auth;
 
-export async function getSession(){const {data,error}=await auth.getSession();if(error)throw error;return data?.session?data:null}
-export async function signIn(email,password){const r=await auth.signIn.email({email,password,rememberMe:true});if(r.error)throw r.error;return r.data}
-export async function signUp(name,email,password){const r=await auth.signUp.email({name,email,password});if(r.error)throw r.error;return r.data}
-export async function signOut(){const r=await auth.signOut();if(r?.error)throw r.error}
+let sessionCache=null;export async function getSession(){if(sessionCache)return sessionCache;const {data,error}=await auth.getSession();if(error)throw error;sessionCache=data?.session?data:null;return sessionCache}
+export async function signIn(email,password){const r=await auth.signIn.email({email,password,rememberMe:true});if(r.error)throw r.error;sessionCache=null;return r.data}
+export async function signUp(name,email,password){const r=await auth.signUp.email({name,email,password});if(r.error)throw r.error;sessionCache=null;return r.data}
+export async function signOut(){const r=await auth.signOut();sessionCache=null;if(r?.error)throw r.error}
 
 const iso=n=>new Date(n||Date.now()).toISOString();
 const validUuid=v=>/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v||"");
