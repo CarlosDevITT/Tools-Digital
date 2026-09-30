@@ -1,13 +1,13 @@
-const CACHE="tools-digital-v5-3-5";
+const CACHE="tools-digital-v5-3-6";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=5.3.5",
-  "./src/main.js?v=5.3.5",
-  "./src/services/neon.js?v=5.3.5",
-  "./src/data/tools.js?v=5.3.5",
-  "./src/modules/flow-tools.js?v=5.3.5","./src/modules/session.js?v=5.3.5","./src/modules/projects.js?v=5.3.5","./src/modules/bootstrap.js?v=5.3.5",
-  "./src/modules/second-brain.js?v=5.3.5","./src/modules/wikilinks.js","./src/modules/markdown.js","./src/modules/note-templates.js","./src/modules/knowledge-graph.js","./src/modules/finance.js?v=5.3.5",
+  "./styles.css?v=5.3.6",
+  "./src/main.js?v=5.3.6",
+  "./src/services/neon.js?v=5.3.6",
+  "./src/data/tools.js?v=5.3.6",
+  "./src/modules/flow-tools.js?v=5.3.6","./src/modules/session.js?v=5.3.6","./src/modules/projects.js?v=5.3.6","./src/modules/bootstrap.js?v=5.3.6",
+  "./src/modules/second-brain.js?v=5.3.6","./src/modules/wikilinks.js","./src/modules/markdown.js","./src/modules/note-templates.js","./src/modules/knowledge-graph.js","./src/modules/finance.js?v=5.3.6",
   "./manifest.json",
   "./assets/IMG_0162.JPG"
 ];
