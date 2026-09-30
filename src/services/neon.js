@@ -84,3 +84,10 @@ export async function saveCloudProject(input={}){
 export async function deleteCloudProject(id){const r=await neon.from("projects").delete().eq("id",id);if(r.error)throw r.error}
 export async function listActivity(){const s=await getSession();if(!s)return[];const r=await neon.from("activity_logs").select("*").order("created_at",{ascending:false}).limit(100);if(r.error)throw r.error;return r.data||[]}
 export async function addActivity(module,action,label="",metadata={}){const s=await getSession();if(!s)return;const r=await neon.from("activity_logs").insert({owner_id:s.user.id,module,action,label,metadata});if(r.error)throw r.error}
+
+export async function listFlows(){const s=await getSession();if(!s)return[];const r=await neon.from("flows").select("*").order("updated_at",{ascending:false});if(r.error)throw r.error;return r.data||[]}
+export async function saveFlowDocument(flow){
+ const s=await getSession();if(!s)return null;const row={owner_id:s.user.id,name:flow.name||"Sem título",document:{nodes:flow.nodes||[],edges:flow.edges||[]}};
+ let r;if(validUuid(flow.id))r=await neon.from("flows").update(row).eq("id",flow.id).select("*").maybeSingle();if(!r?.data)r=await neon.from("flows").insert(row).select("*").single();if(r.error)throw r.error;return r.data
+}
+export async function deleteFlowDocument(id){if(!validUuid(id))return;const r=await neon.from("flows").delete().eq("id",id);if(r.error)throw r.error}
