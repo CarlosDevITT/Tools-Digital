@@ -76,7 +76,7 @@ async function authenticate(mode){
  const name=$("#authName")?.value.trim()||"",email=$("#authEmail")?.value.trim()||"",password=$("#authPassword")?.value||"",confirm=$("#authPasswordConfirm")?.value||"",error=$("#authFormError");
  const fail=m=>{if(error){error.textContent=m;error.hidden=false}return false};
  if(mode==="signup"&&!name)return fail("Informe seu nome.");
- if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email))return fail("Informe um e-mail válido.");
+ if(!email || !email.includes("@") || !email.slice(email.lastIndexOf("@")+1).includes("."))return fail("Informe um e-mail válido.");
  if(password.length<8)return fail("A senha precisa ter pelo menos 8 caracteres.");
  if(mode==="signup"&&password!==confirm)return fail("As senhas não conferem.");
  const btn=mode==="signup"?$("#signupSubmit"):$("#loginSubmit");if(btn){btn.disabled=true;btn.textContent=mode==="signup"?"Criando conta…":"Entrando…"}if(error)error.hidden=true;
