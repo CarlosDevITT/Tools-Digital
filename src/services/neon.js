@@ -27,7 +27,7 @@ function noteRow(n,owner){
 }
 function txRow(t,owner){
  const amount=Math.abs(Number(t.amount||0));
- return {id:t.id,owner_id:owner,description:t.description||"",category:t.category||"Geral",type:Number(t.amount)>=0?"in":"out",amount_cents:amount,occurred_on:new Date(t.createdAt||Date.now()).toISOString().slice(0,10),created_at:iso(t.createdAt),updated_at:iso(t.updatedAt||t.createdAt)}
+ return {id:t.id,owner_id:owner,description:t.description||"",category:t.category||"Geral",type:Number(t.amount)>=0?"in":"out",amount_cents:amount,occurred_on:new Date(t.createdAt||Date.now()).toISOString().slice(0,10),finance_scope:t.financeScope==="business"?"business":"personal",finance_entity_id:t.financeEntityId||null,counterparty:t.counterparty||null,metadata:t.metadata&&typeof t.metadata==="object"?t.metadata:{},created_at:iso(t.createdAt),updated_at:iso(t.updatedAt||t.createdAt)}
 }
 export async function pullCloud(){
  const s=await getSession();if(!s)return null;
@@ -38,7 +38,7 @@ export async function pullCloud(){
   neon.from("tool_usage").select("*")
  ]);
  for(const r of [notes,tx,favs,usage])if(r.error)throw r.error;
- return {user:s.user,notes:(notes.data||[]).map(n=>({id:n.id,title:n.title,body:n.body,type:n.type||"concept",properties:n.properties||{},tags:n.tags||[],pinned:n.pinned,favorite:n.favorite,createdAt:Date.parse(n.created_at),updatedAt:Date.parse(n.updated_at)})),transactions:(tx.data||[]).map(t=>({id:t.id,description:t.description,category:t.category,amount:(t.type==="out"?-1:1)*Number(t.amount_cents),createdAt:Date.parse(t.created_at),updatedAt:Date.parse(t.updated_at)})),favorites:(favs.data||[]).map(x=>x.tool_id),usage:Object.fromEntries((usage.data||[]).map(x=>[x.tool_id,Number(x.access_count)]))}
+ return {user:s.user,notes:(notes.data||[]).map(n=>({id:n.id,title:n.title,body:n.body,type:n.type||"concept",properties:n.properties||{},tags:n.tags||[],pinned:n.pinned,favorite:n.favorite,createdAt:Date.parse(n.created_at),updatedAt:Date.parse(n.updated_at)})),transactions:(tx.data||[]).map(t=>({id:t.id,description:t.description,category:t.category,amount:(t.type==="out"?-1:1)*Number(t.amount_cents),financeScope:t.finance_scope||"personal",financeEntityId:t.finance_entity_id||null,counterparty:t.counterparty||"",metadata:t.metadata||{},createdAt:Date.parse(t.created_at),updatedAt:Date.parse(t.updated_at)})),favorites:(favs.data||[]).map(x=>x.tool_id),usage:Object.fromEntries((usage.data||[]).map(x=>[x.tool_id,Number(x.access_count)]))}
 }
 async function upsertRows(table,rows){
  for(const row of rows){
@@ -65,6 +65,9 @@ export async function syncNoteLinks(noteId,titles=[]){const s=await getSession()
 export async function getNoteBacklinks(noteId){const s=await getSession();if(!s)return[];const lr=await neon.from("note_links").select("source_note_id").eq("target_note_id",noteId);if(lr.error)throw lr.error;const ids=[...new Set((lr.data||[]).map(x=>x.source_note_id))];if(!ids.length)return[];const nr=await neon.from("notes").select("id,title,type,tags,updated_at").in("id",ids);if(nr.error)throw nr.error;return nr.data||[]}
 export async function getKnowledgeGraph(){const s=await getSession();if(!s)return{nodes:[],links:[]};const [nr,lr]=await Promise.all([neon.from("notes").select("id,title,type,tags"),neon.from("note_links").select("source_note_id,target_note_id")]);if(nr.error)throw nr.error;if(lr.error)throw lr.error;return{nodes:(nr.data||[]).map(n=>({id:n.id,title:n.title||"Sem título",type:n.type||"concept",tags:n.tags||[]})),links:(lr.data||[]).map(l=>({source:l.source_note_id,target:l.target_note_id}))}}
 export async function searchKnowledgeNotes(query=""){const s=await getSession();if(!s)return[];const q=String(query).trim();let req=neon.from("notes").select("id,title,body,type,tags,properties,created_at,updated_at").order("updated_at",{ascending:false}).limit(100);if(q)req=req.or("title.ilike.%"+q.replace(/[%_,]/g,"")+"%,body.ilike.%"+q.replace(/[%_,]/g,"")+"%");const r=await req;if(r.error)throw r.error;return r.data||[]}
+export async function listFinanceEntities(){const s=await getSession();if(!s)return[];const r=await neon.from("finance_entities").select("*").order("kind").order("name");if(r.error)throw r.error;return(r.data||[]).map(x=>({id:x.id,kind:x.kind,name:x.name,document:x.document||"",isDefault:!!x.is_default,metadata:x.metadata||{},createdAt:Date.parse(x.created_at),updatedAt:Date.parse(x.updated_at)}))}
+export async function saveFinanceEntity(entity){const s=await getSession();if(!s)throw new Error("Sessão necessária");const row={owner_id:s.user.id,kind:entity.kind==="business"?"business":"personal",name:String(entity.name||"").trim(),document:entity.kind==="business"?String(entity.document||"").replace(/\D/g,"")||null:null,is_default:!!entity.isDefault,metadata:entity.metadata||{},updated_at:new Date().toISOString()};if(!row.name)throw new Error("Nome obrigatório");if(entity.id){const r=await neon.from("finance_entities").update(row).eq("id",entity.id).eq("owner_id",s.user.id).select("*").single();if(r.error)throw r.error;return r.data}const r=await neon.from("finance_entities").insert(row).select("*").single();if(r.error)throw r.error;return r.data}
+export async function deleteFinanceEntity(id){const s=await getSession();if(!s)return false;const r=await neon.from("finance_entities").delete().eq("id",id).eq("owner_id",s.user.id);if(r.error)throw r.error;return true}
 export async function cloudCounts(){
  const s=await getSession();if(!s)return null;
  const [n,t,f,u]=await Promise.all([
