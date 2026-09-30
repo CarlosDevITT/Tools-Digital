@@ -1,0 +1,4 @@
+export function extractWikilinks(text=""){const seen=new Set();return[...text.matchAll(/\[\[([^\]\n|]+)(?:\|[^\]\n]+)?\]\]/g)].map(m=>m[1].trim()).filter(x=>x&&!seen.has(x.toLocaleLowerCase())&&seen.add(x.toLocaleLowerCase()))}
+export function replaceWikilinkTitle(text="",oldTitle="",newTitle=""){if(!oldTitle||oldTitle===newTitle)return text;const safe=oldTitle.replace(/[.*+?^{}()|[\]\\]/g,"\\$&");return text.replace(new RegExp("\\[\\["+safe+"(?=\\||\\]\\])","gi"),"[["+newTitle)}
+export function wikilinkQuery(text="",caret=text.length){const before=text.slice(0,caret),start=before.lastIndexOf("[[");if(start<0||before.slice(start+2).includes("]]"))return null;return{start,query:before.slice(start+2)}}
+export function resolveWikilinks(text,notes){const byTitle=new Map(notes.map(n=>[(n.title||"").trim().toLocaleLowerCase(),n]));return extractWikilinks(text).map(title=>({title,note:byTitle.get(title.toLocaleLowerCase())||null}))}
