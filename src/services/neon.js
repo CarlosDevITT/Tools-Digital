@@ -20,13 +20,14 @@ export async function signOut(){const r=await auth.signOut();sessionCache=null;i
 const iso=n=>new Date(n||Date.now()).toISOString();
 const validUuid=v=>/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v||"");
 const uuid=()=>crypto.randomUUID();
+export const makeCloudId=uuid;
 
 function noteRow(n,owner){
- return {id:validUuid(n.id)?n.id:uuid(),owner_id:owner,title:n.title||"",body:n.body||"",tags:Array.isArray(n.tags)?n.tags:[],pinned:!!n.pinned,favorite:!!n.favorite,created_at:iso(n.createdAt),updated_at:iso(n.updatedAt||n.createdAt)}
+ return {id:n.id,owner_id:owner,title:n.title||"",body:n.body||"",tags:Array.isArray(n.tags)?n.tags:[],pinned:!!n.pinned,favorite:!!n.favorite,created_at:iso(n.createdAt),updated_at:iso(n.updatedAt||n.createdAt)}
 }
 function txRow(t,owner){
  const amount=Math.abs(Number(t.amount||0));
- return {id:validUuid(t.id)?t.id:uuid(),owner_id:owner,description:t.description||"",category:t.category||"Geral",type:Number(t.amount)>=0?"in":"out",amount_cents:amount,occurred_on:new Date(t.createdAt||Date.now()).toISOString().slice(0,10),created_at:iso(t.createdAt),updated_at:iso(t.updatedAt||t.createdAt)}
+ return {id:t.id,owner_id:owner,description:t.description||"",category:t.category||"Geral",type:Number(t.amount)>=0?"in":"out",amount_cents:amount,occurred_on:new Date(t.createdAt||Date.now()).toISOString().slice(0,10),created_at:iso(t.createdAt),updated_at:iso(t.updatedAt||t.createdAt)}
 }
 export async function pullCloud(){
  const s=await getSession();if(!s)return null;
@@ -57,6 +58,8 @@ export async function pushCloud(snapshot){
 }
 export async function deleteCloudRecord(table,id){if(!["notes","transactions"].includes(table)||!validUuid(id))return false;const s=await getSession();if(!s)return false;const r=await neon.from(table).delete().eq("id",id).eq("owner_id",s.user.id);if(r.error)throw r.error;return true}
 export async function deleteCloudFavorite(toolId){const s=await getSession();if(!s)return false;const r=await neon.from("favorites").delete().eq("owner_id",s.user.id).eq("tool_id",toolId);if(r.error)throw r.error;return true}
+export async function replaceCloudFavorites(toolIds=[]){const s=await getSession();if(!s)return false;const cur=await neon.from("favorites").select("tool_id");if(cur.error)throw cur.error;const remote=new Set((cur.data||[]).map(x=>x.tool_id)),local=new Set(toolIds);for(const id of local)if(!remote.has(id)){const r=await neon.from("favorites").insert({owner_id:s.user.id,tool_id:id});if(r.error)throw r.error}for(const id of remote)if(!local.has(id)){const r=await neon.from("favorites").delete().eq("owner_id",s.user.id).eq("tool_id",id);if(r.error)throw r.error}return true}
+
 export async function cloudCounts(){
  const s=await getSession();if(!s)return null;
  const [n,t,f,u]=await Promise.all([
