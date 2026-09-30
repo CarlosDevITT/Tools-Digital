@@ -1,13 +1,13 @@
-const CACHE="tools-digital-v5-0-0";
+const CACHE="tools-digital-v5-0-1";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=5.0.0",
-  "./src/main.js?v=5.0.0",
-  "./src/services/neon.js?v=5.0.0",
-  "./src/data/tools.js?v=5.0.0",
-  "./src/modules/flow-tools.js?v=5.0.0","./src/modules/session.js?v=5.0.0","./src/modules/projects.js?v=5.0.0","./src/modules/bootstrap.js?v=5.0.0",
-  "./src/modules/second-brain.js?v=5.0.0","./src/modules/wikilinks.js","./src/modules/markdown.js","./src/modules/note-templates.js","./src/modules/knowledge-graph.js",
+  "./styles.css?v=5.0.1",
+  "./src/main.js?v=5.0.1",
+  "./src/services/neon.js?v=5.0.1",
+  "./src/data/tools.js?v=5.0.1",
+  "./src/modules/flow-tools.js?v=5.0.1","./src/modules/session.js?v=5.0.1","./src/modules/projects.js?v=5.0.1","./src/modules/bootstrap.js?v=5.0.1",
+  "./src/modules/second-brain.js?v=5.0.1","./src/modules/wikilinks.js","./src/modules/markdown.js","./src/modules/note-templates.js","./src/modules/knowledge-graph.js",
   "./manifest.json",
   "./assets/IMG_0162.JPG"
 ];
