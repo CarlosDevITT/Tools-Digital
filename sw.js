@@ -1,10 +1,10 @@
-const CACHE="tools-digital-v3-2-1";
+const CACHE="tools-digital-v3-2-2";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=3.2.1",
-  "./src/main.js?v=3.2.1",
-  "./src/services/neon.js?v=3.2.1",
+  "./styles.css?v=3.2.2",
+  "./src/main.js?v=3.2.2",
+  "./src/services/neon.js?v=3.2.2",
   "./src/data/tools.js",
   "./src/modules/flow-tools.js",
   "./manifest.json",
