@@ -1,18 +1,39 @@
 {
+  "id": "./",
   "name": "Tools Digital",
   "short_name": "Tools",
   "description": "Workspace operacional da States Softwares",
+  "lang": "pt-BR",
+  "dir": "ltr",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "any",
+  "prefer_related_applications": false,
   "background_color": "#000000",
   "theme_color": "#000000",
+  "categories": ["productivity", "business"],
   "icons": [
     {
       "src": "./assets/IMG_0162.JPG",
       "sizes": "any",
       "type": "image/jpeg",
       "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Financeiro",
+      "short_name": "Financeiro",
+      "url": "./#finance",
+      "icons": [{"src": "./assets/IMG_0162.JPG", "sizes": "any", "type": "image/jpeg"}]
+    },
+    {
+      "name": "Novo fluxo",
+      "short_name": "Fluxo",
+      "url": "./#flow",
+      "icons": [{"src": "./assets/IMG_0162.JPG", "sizes": "any", "type": "image/jpeg"}]
     }
   ]
 }

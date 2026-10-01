@@ -1,48 +1,76 @@
-const CACHE="tools-digital-v5-5-1";
+const VERSION="5.7.1";
+const SHELL_CACHE="tools-digital-shell-"+VERSION;
+const RUNTIME_CACHE="tools-digital-runtime-"+VERSION;
+const CACHE_PREFIX="tools-digital-";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=5.6.0",
-  "./src/main.js?v=5.6.0",
-  "./src/services/neon.js?v=5.6.0",
-  "./src/data/tools.js?v=5.6.0",
-  "./src/modules/flow-tools.js?v=5.6.0","./src/modules/session.js?v=5.6.0","./src/modules/projects.js?v=5.6.0","./src/modules/bootstrap.js?v=5.6.0",
-  "./src/modules/second-brain.js?v=5.6.0","./src/modules/wikilinks.js","./src/modules/markdown.js","./src/modules/note-templates.js","./src/modules/knowledge-graph.js","./src/modules/finance.js?v=5.6.0",
+  "./styles.css?v=5.7.0",
   "./manifest.json",
-  "./assets/IMG_0162.JPG"
+  "./assets/IMG_0162.JPG",
+  "./src/main.js?v=5.7.0",
+  "./src/services/neon.js?v=5.7.0",
+  "./src/data/tools.js?v=5.7.0",
+  "./src/modules/flow-tools.js?v=5.7.0",
+  "./src/modules/session.js?v=5.7.0",
+  "./src/modules/projects.js?v=5.7.0",
+  "./src/modules/bootstrap.js?v=5.7.0",
+  "./src/modules/second-brain.js?v=5.7.0",
+  "./src/modules/wikilinks.js?v=5.7.0",
+  "./src/modules/markdown.js?v=5.7.0",
+  "./src/modules/note-templates.js?v=5.7.0",
+  "./src/modules/knowledge-graph.js?v=5.7.0",
+  "./src/modules/finance.js?v=5.7.0",
+  "./src/modules/finance-enhancements.js?v=5.7.0",
+  "./src/modules/project-enhancements.js?v=5.7.0"
 ];
 
-self.addEventListener("install",event=>{
-  self.skipWaiting();
-  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)));
-});
+async function cacheResponse(request,response,cacheName=RUNTIME_CACHE){
+  if(!response||!response.ok||response.type==="opaque")return response;
+  const cache=await caches.open(cacheName);
+  await cache.put(request,response.clone());
+  return response;
+}
 
-self.addEventListener("message",event=>{
-  if(event.data?.type==="SKIP_WAITING") self.skipWaiting();
+self.addEventListener("install",event=>{
+  event.waitUntil((async()=>{
+    const cache=await caches.open(SHELL_CACHE);
+    await cache.addAll(CORE);
+    await self.skipWaiting();
+  })());
 });
 
 self.addEventListener("activate",event=>{
-  event.waitUntil(
-    caches.keys()
-      .then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key))))
-      .then(()=>self.clients.claim())
-  );
+  event.waitUntil((async()=>{
+    const keys=await caches.keys();
+    await Promise.all(keys.filter(key=>key.startsWith(CACHE_PREFIX)&&![SHELL_CACHE,RUNTIME_CACHE].includes(key)).map(key=>caches.delete(key)));
+    await self.clients.claim();
+  })());
+});
+
+self.addEventListener("message",event=>{
+  if(event.data?.type==="SKIP_WAITING")self.skipWaiting();
+  if(event.data?.type==="CLEAR_RUNTIME_CACHE")event.waitUntil?.(caches.delete(RUNTIME_CACHE));
 });
 
 self.addEventListener("fetch",event=>{
-  if(event.request.method!=="GET") return;
+  if(event.request.method!=="GET")return;
   const url=new URL(event.request.url);
-  if(url.origin!==self.location.origin) return;
-  const nav=event.request.mode==="navigate";
-  event.respondWith(
-    (nav?fetch(event.request,{cache:"no-store"}):fetch(event.request))
-      .then(response=>{
-        if(response.ok){
-          const copy=response.clone();
-          caches.open(CACHE).then(cache=>cache.put(event.request,copy));
-        }
-        return response;
-      })
-      .catch(()=>caches.match(event.request).then(cached=>cached||(nav?caches.match("./index.html"):Response.error())))
-  );
+  if(url.origin!==self.location.origin)return;
+  const request=event.request,navigation=request.mode==="navigate";
+  const dynamic=request.destination==="script"||request.destination==="style"||request.destination==="document"||url.pathname.endsWith(".json");
+  event.respondWith((async()=>{
+    if(navigation){
+      try{return await cacheResponse(request,await fetch(request,{cache:"no-store"}),SHELL_CACHE)}
+      catch{return(await caches.match(request))||caches.match("./index.html")}
+    }
+    if(dynamic){
+      try{return await cacheResponse(request,await fetch(request,{cache:"no-store"}))}
+      catch{return(await caches.match(request))||Response.error()}
+    }
+    const cached=await caches.match(request);
+    if(cached)return cached;
+    try{return await cacheResponse(request,await fetch(request))}
+    catch{return Response.error()}
+  })());
 });
