@@ -13,9 +13,9 @@ export const neon=createClient({
 export const auth=neon.auth;
 
 let sessionCache=null,familyContextCache=null;export async function getSession(){if(sessionCache)return sessionCache;const {data,error}=await auth.getSession();if(error)throw error;sessionCache=data?.session?data:null;return sessionCache}
-export async function signIn(email,password){const r=await auth.signIn.email({email,password,rememberMe:true});if(r.error)throw r.error;sessionCache=null;return r.data}
-export async function signUp(name,email,password){const r=await auth.signUp.email({name,email,password});if(r.error)throw r.error;sessionCache=null;return r.data}
-export async function signOut(){const r=await auth.signOut();sessionCache=null;if(r?.error)throw r.error}
+export async function signIn(email,password){const r=await auth.signIn.email({email,password,rememberMe:true});if(r.error)throw r.error;sessionCache=null;familyContextCache=null;return r.data}
+export async function signUp(name,email,password){const r=await auth.signUp.email({name,email,password});if(r.error)throw r.error;sessionCache=null;familyContextCache=null;return r.data}
+export async function signOut(){const r=await auth.signOut();sessionCache=null;familyContextCache=null;if(r?.error)throw r.error}
 
 const iso=n=>new Date(n||Date.now()).toISOString();
 const validUuid=v=>/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v||"");
@@ -48,7 +48,7 @@ async function upsertRows(table,rows){
 }
 export async function pushCloud(snapshot){
  const s=await getSession();if(!s)return false;const owner=s.user.id;
- const notes=(snapshot.notes||[]).map(n=>noteRow(n,owner)),transactions=await Promise.all((snapshot.transactions||[]).map(t=>txRow(t,owner)));
+ const notes=(snapshot.notes||[]).map(n=>noteRow(n,owner)),ownTransactions=(snapshot.transactions||[]).filter(t=>!t.ownerId||t.ownerId===owner),transactions=await Promise.all(ownTransactions.map(t=>txRow(t,owner)));
  await upsertRows("notes",notes);await upsertRows("transactions",transactions);
  const fr=await neon.from("favorites").select("tool_id");if(fr.error)throw fr.error;const remoteFav=new Set((fr.data||[]).map(x=>x.tool_id));
  for(const id of snapshot.favorites||[])if(!remoteFav.has(id)){const r=await neon.from("favorites").insert({owner_id:owner,tool_id:id});if(r.error)throw r.error}
