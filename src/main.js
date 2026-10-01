@@ -1,13 +1,13 @@
-import{tools}from"./data/tools.js?v=5.8.0";
-import{mountFlow}from"./modules/flow-tools.js?v=5.8.0";
-import{restoreSession as restoreUserSession,clearSessionState}from"./modules/session.js?v=5.8.0";
-import{projectSource,projectsEmpty}from"./modules/projects.js?v=5.8.0";
-import{bootstrapApp}from"./modules/bootstrap.js?v=5.8.0";
-import{secondBrainView,mountSecondBrain}from"./modules/second-brain.js?v=5.8.0";
-import{financeScopeTabs,companyManagerHtml,defaultCategories,familyWorkspace,memberManagerHtml,accountManagerHtml,familyOnboardingHtml,inviteCreatedHtml,matchesPersonalFinanceFilter}from"./modules/finance.js?v=5.8.0";
-import{mountFinanceEnhancements}from"./modules/finance-enhancements.js?v=5.8.0";
-import"./modules/project-enhancements.js?v=5.8.0";
-import{getSession,signIn,signUp,signOut,pullCloud,pushCloud,cloudCounts,getProfile,saveProfile,listWorkspaces,saveWorkspace,deleteWorkspace,listCloudProjects,saveCloudProject,deleteCloudProject,listActivity,addActivity,listFlows,saveFlowDocument,deleteFlowDocument,deleteCloudRecord,deleteCloudFavorite,replaceCloudFavorites,makeCloudId,saveKnowledgeNote,syncNoteLinks,getNoteBacklinks,getKnowledgeGraph,searchKnowledgeNotes,listFinanceEntities,saveFinanceEntity,deleteFinanceEntity,listFinanceMembers,saveFinanceMember,deleteFinanceMember,listFinanceAccounts,saveFinanceAccount,deleteFinanceAccount,createFinanceInvite,listFinanceInvites,getFinanceInvite,acceptFinanceInvite,reconcileFamilyMemberships,listSettings,saveSettings,requestPasswordReset}from"./services/neon.js?v=5.8.0";
+import{tools}from"./data/tools.js?v=5.8.1";
+import{mountFlow}from"./modules/flow-tools.js?v=5.8.1";
+import{restoreSession as restoreUserSession,clearSessionState}from"./modules/session.js?v=5.8.1";
+import{projectSource,projectsEmpty}from"./modules/projects.js?v=5.8.1";
+import{bootstrapApp}from"./modules/bootstrap.js?v=5.8.1";
+import{secondBrainView,mountSecondBrain}from"./modules/second-brain.js?v=5.8.1";
+import{financeScopeTabs,companyManagerHtml,defaultCategories,familyWorkspace,memberManagerHtml,accountManagerHtml,familyOnboardingHtml,inviteCreatedHtml,matchesPersonalFinanceFilter}from"./modules/finance.js?v=5.8.1";
+import{mountFinanceEnhancements}from"./modules/finance-enhancements.js?v=5.8.1";
+import"./modules/project-enhancements.js?v=5.8.1";
+import{getSession,signIn,signUp,signOut,pullCloud,pushCloud,cloudCounts,getProfile,saveProfile,listWorkspaces,saveWorkspace,deleteWorkspace,listCloudProjects,saveCloudProject,deleteCloudProject,listActivity,addActivity,listFlows,saveFlowDocument,deleteFlowDocument,deleteCloudRecord,deleteCloudFavorite,replaceCloudFavorites,makeCloudId,saveKnowledgeNote,syncNoteLinks,getNoteBacklinks,getKnowledgeGraph,searchKnowledgeNotes,listFinanceEntities,saveFinanceEntity,deleteFinanceEntity,listFinanceMembers,saveFinanceMember,deleteFinanceMember,listFinanceAccounts,saveFinanceAccount,deleteFinanceAccount,createFinanceInvite,listFinanceInvites,getFinanceInvite,acceptFinanceInvite,reconcileFamilyMemberships,listSettings,saveSettings,requestPasswordReset}from"./services/neon.js?v=5.8.1";
 const $=s=>document.querySelector(s),store={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set:(k,v)=>localStorage.setItem(k,JSON.stringify(v))};
 let view="account",category="Todos",financeScope=store.get("td:finance:scope","personal"),financeEntities=[],financeMembers=[],financeAccounts=[],financeInvites=[],financeMemberFilter=store.get("td:finance:member","me");
 const projects=[
@@ -133,7 +133,7 @@ function runCommand(i=commandIndex){const x=commandItems[i];if(!x)return;x.kind=
 function openCommand(){overlay.hidden=false;input.value="";command();setTimeout(()=>input.focus(),0)}
 function closeCommand(){overlay.hidden=true}
 $("#commandBtn").onclick=openCommand;input.oninput=e=>command(e.target.value);document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();openCommand();return}if(overlay.hidden)return;if(e.key==="Escape"){closeCommand();return}if(e.key==="ArrowDown"){e.preventDefault();commandIndex=Math.min(commandIndex+1,commandItems.length-1);paintCommandSelection()}else if(e.key==="ArrowUp"){e.preventDefault();commandIndex=Math.max(commandIndex-1,0);paintCommandSelection()}else if(e.key==="Enter"){e.preventDefault();runCommand()}});overlay.onclick=e=>{if(e.target===overlay)closeCommand()};
-const APP_VERSION="5.8.0";let swRegistration=null,refreshing=false,updatePromptOpen=false;
+const APP_VERSION="5.8.1";let swRegistration=null,refreshing=false,updatePromptOpen=false;
 $("#appVersion").textContent="Tools Digital v"+APP_VERSION;
 async function updatePrompt(worker){if(!worker||updatePromptOpen)return;updatePromptOpen=true;const ok=window.Swal?(await Swal.fire({title:"Nova atualização disponível",text:"Uma nova versão do Tools Digital está pronta para instalar.",icon:"info",showCancelButton:true,confirmButtonText:"Atualizar agora",cancelButtonText:"Depois",background:"#080808",color:"#fff",confirmButtonColor:"#fff"})).isConfirmed:confirm("Nova atualização disponível. Atualizar agora?");if(ok)worker.postMessage({type:"SKIP_WAITING"});updatePromptOpen=false}
 async function checkForUpdates(manual=false){if(!swRegistration){if(manual)toast("Verificação de atualização indisponível","error");return}const label=$("#updateLabel");if(label)label.textContent="Verificando...";try{await swRegistration.update();if(swRegistration.waiting){await updatePrompt(swRegistration.waiting)}else if(manual){toast("Você já está na versão mais recente","success")}}catch{if(manual)toast("Não foi possível buscar atualizações","error")}finally{if(label)label.textContent="Buscar atualizações"}}
