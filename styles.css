@@ -426,3 +426,11 @@ body{min-height:100dvh;background:radial-gradient(900px 520px at 60% -180px,#242
 .td-finance-modal .td-modal-actions{margin:18px 0 0!important;width:100%!important;gap:8px!important}
 .td-finance-modal .td-modal-actions button{flex:1!important;margin:0!important;min-height:44px!important;border-radius:11px!important}
 @media(max-width:600px){.td-finance-modal{width:calc(100% - 20px)!important;padding:18px!important;border-radius:18px!important}.td-finance-modal .td-field-row{grid-template-columns:1fr}.td-finance-modal .td-modal-title{font-size:20px!important}.td-finance-modal .tx-destination-picker{grid-template-columns:1fr 1fr!important}.td-finance-modal .swal2-close{right:10px!important;top:10px!important}}
+
+/* Finance stability v5.9 — isolate transient UI from module layout */
+.crud-undo,.finance-page .crud-undo{position:fixed!important;display:none;left:auto!important;top:auto!important;right:18px!important;bottom:max(18px,calc(env(safe-area-inset-bottom) + 12px))!important;width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;max-width:calc(100vw - 36px)!important;margin:0!important;padding:10px 12px!important;z-index:1000!important}
+.crud-undo:not([hidden]){display:flex!important}
+@media(max-width:760px){.crud-undo,.finance-page .crud-undo{left:14px!important;right:14px!important;bottom:calc(76px + env(safe-area-inset-bottom))!important;width:auto!important;max-width:none!important}}
+.swal2-container{padding:12px!important}
+.swal2-popup.td-finance-modal{height:auto!important;min-height:0!important;max-height:calc(100dvh - 24px)!important}
+.swal2-popup.td-finance-modal .swal2-close{display:grid!important;visibility:visible!important;opacity:1!important;z-index:4!important}
