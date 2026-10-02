@@ -136,3 +136,7 @@ export async function migrateProjects(seed=[]){const s=await getSession();if(!s)
 export async function requestPasswordReset(email,redirectTo=location.href){const r=await auth.requestPasswordReset({email,redirectTo});if(r?.error)throw r.error;return r?.data}
 
 export async function getInfrastructureStatus(){const s=await getSession();if(!s)return null;const r=await neon.rpc("app_infrastructure_status");if(r.error)throw r.error;return r.data||null}
+
+export async function getCurrentModuleAccess(){const s=await getSession();if(!s)return null;const r=await neon.rpc("current_module_access");if(r.error)throw r.error;return r.data||null}
+export async function adminListUsers(){const s=await getSession();if(!s)return[];const r=await neon.rpc("admin_list_users");if(r.error)throw r.error;return r.data||[]}
+export async function adminSetUserAccess(userId,modules,active=true,role="user"){const s=await getSession();if(!s)throw new Error("Sessão necessária");const r=await neon.rpc("admin_set_user_access",{p_user_id:userId,p_modules:modules,p_active:active,p_role:role});if(r.error)throw r.error;if(r.data?.ok===false)throw new Error(r.data.error||"Acesso negado");return r.data}
