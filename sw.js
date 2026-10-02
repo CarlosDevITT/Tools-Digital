@@ -1,28 +1,28 @@
-const VERSION="5.9.5";
+const VERSION="5.9.6";
 const SHELL_CACHE="tools-digital-shell-"+VERSION;
 const RUNTIME_CACHE="tools-digital-runtime-"+VERSION;
 const CACHE_PREFIX="tools-digital-";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=5.9.5",
+  "./styles.css?v=5.9.6",
   "./manifest.json",
   "./assets/IMG_0162.JPG",
-  "./src/main.js?v=5.9.5",
-  "./src/services/neon.js?v=5.9.5",
-  "./src/data/tools.js?v=5.9.5",
-  "./src/modules/flow-tools.js?v=5.9.5",
-  "./src/modules/session.js?v=5.9.5",
-  "./src/modules/projects.js?v=5.9.5",
-  "./src/modules/bootstrap.js?v=5.9.5",
-  "./src/modules/second-brain.js?v=5.9.5",
-  "./src/modules/wikilinks.js?v=5.9.5",
-  "./src/modules/markdown.js?v=5.9.5",
-  "./src/modules/note-templates.js?v=5.9.5",
-  "./src/modules/knowledge-graph.js?v=5.9.5",
-  "./src/modules/finance.js?v=5.9.5",
-  "./src/modules/finance-enhancements.js?v=5.9.5",
-  "./src/modules/project-enhancements.js?v=5.9.5"
+  "./src/main.js?v=5.9.6",
+  "./src/services/neon.js?v=5.9.6",
+  "./src/data/tools.js?v=5.9.6",
+  "./src/modules/flow-tools.js?v=5.9.6",
+  "./src/modules/session.js?v=5.9.6",
+  "./src/modules/projects.js?v=5.9.6",
+  "./src/modules/bootstrap.js?v=5.9.6",
+  "./src/modules/second-brain.js?v=5.9.6",
+  "./src/modules/wikilinks.js?v=5.9.6",
+  "./src/modules/markdown.js?v=5.9.6",
+  "./src/modules/note-templates.js?v=5.9.6",
+  "./src/modules/knowledge-graph.js?v=5.9.6",
+  "./src/modules/finance.js?v=5.9.6",
+  "./src/modules/finance-enhancements.js?v=5.9.6",
+  "./src/modules/project-enhancements.js?v=5.9.6"
 ];
 
 async function cacheResponse(request,response,cacheName=RUNTIME_CACHE){
