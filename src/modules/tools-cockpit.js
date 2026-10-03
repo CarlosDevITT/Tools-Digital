@@ -1,5 +1,5 @@
-import{tools as fallbackTools}from"../data/tools.js?v=5.20.0";
-import{listToolCockpitSnapshot}from"../services/neon.js?v=5.20.0";
+import{tools as fallbackTools}from"../data/tools.js?v=5.21.0";
+import{listToolCockpitSnapshot}from"../services/neon.js?v=5.21.0";
 const CACHE_KEY="td:tools:cockpit:v2",CACHE_VERSION=2;
 const labels={"ia":"IA","automacao":"Automação","produtividade":"Produtividade","marketing":"Marketing","design-documentacao":"Design & Documentação","seguranca":"Segurança","educacao":"Educação","utilidades":"Utilidades","vendas-crm":"Vendas & CRM","dev-infra-cloud":"Dev & Infra Cloud","suporte-remoto-help-desk":"Suporte Remoto & Help Desk","diagnostico-so":"Diagnóstico & SO"};
 const read=()=>{try{const x=JSON.parse(localStorage.getItem(CACHE_KEY)||"null");return x?.version===CACHE_VERSION?x:null}catch{return null}},write=data=>{try{localStorage.setItem(CACHE_KEY,JSON.stringify({version:CACHE_VERSION,savedAt:Date.now(),...data}))}catch{}};
