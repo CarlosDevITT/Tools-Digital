@@ -154,3 +154,22 @@ export async function listToolCockpitSnapshot(since=null){
  return{tools:tools.data||[],stacks:stacks.data||[],quickLinks:quickLinks.data||[],checklists:checklists.data||[],knowledge:knowledge.data||[],serverTime:new Date().toISOString()}
 }
 export async function getToolKnowledgeEntry(id){const s=await getSession();if(!s)return null;const r=await neon.from("tool_knowledge_entries").select("id,tool_id,title,body,error_code,tags,updated_at").eq("id",id).maybeSingle();if(r.error)throw r.error;return r.data||null}
+
+export async function saveToolKnowledgeEntry(entry){
+ const s=await getSession();if(!s)throw new Error("Sessão necessária");
+ const row={id:entry.id||makeCloudId(),owner_id:s.user.id,tool_id:entry.toolId||null,title:entry.title?.trim()||"Sem título",body:entry.body||"",error_code:entry.errorCode?.trim()||null,tags:(entry.tags||[]).map(x=>String(x).trim().toLowerCase()).filter(Boolean),updated_at:new Date().toISOString()};
+ const r=await neon.from("tool_knowledge_entries").upsert(row,{onConflict:"id"}).select("*").single();if(r.error)throw r.error;return r.data
+}
+export async function deleteToolKnowledgeEntry(id){const s=await getSession();if(!s)throw new Error("Sessão necessária");const r=await neon.from("tool_knowledge_entries").update({deleted_at:new Date().toISOString(),updated_at:new Date().toISOString()}).eq("id",id);if(r.error)throw r.error}
+export async function saveToolChecklistTemplate(input){
+ const s=await getSession();if(!s)throw new Error("Sessão necessária");const id=input.id||makeCloudId();
+ const r=await neon.from("tool_checklist_templates").upsert({id,owner_id:s.user.id,tool_id:input.toolId||null,title:input.title?.trim()||"Checklist",description:input.description||"",updated_at:new Date().toISOString()},{onConflict:"id"});if(r.error)throw r.error;
+ const old=await neon.from("tool_checklist_items").delete().eq("template_id",id);if(old.error)throw old.error;
+ const items=(input.items||[]).map((label,position)=>({id:makeCloudId(),template_id:id,label:String(label).trim(),position})).filter(x=>x.label);if(items.length){const ir=await neon.from("tool_checklist_items").insert(items);if(ir.error)throw ir.error}return id
+}
+export async function startToolChecklist(templateId){
+ const s=await getSession();if(!s)throw new Error("Sessão necessária");const r=await neon.from("tool_checklist_runs").insert({id:makeCloudId(),owner_id:s.user.id,template_id:templateId}).select("*").single();if(r.error)throw r.error;
+ const items=await neon.from("tool_checklist_items").select("id").eq("template_id",templateId);if(items.error)throw items.error;if(items.data?.length){const x=await neon.from("tool_checklist_run_items").insert(items.data.map(i=>({run_id:r.data.id,item_id:i.id,completed:false})));if(x.error)throw x.error}return r.data
+}
+export async function setToolChecklistItem(runId,itemId,completed){const r=await neon.from("tool_checklist_run_items").update({completed:!!completed,completed_at:completed?new Date().toISOString():null}).eq("run_id",runId).eq("item_id",itemId);if(r.error)throw r.error}
+export async function saveToolQuickLink(input){const s=await getSession();if(!s)throw new Error("Sessão necessária");const row={id:input.id||makeCloudId(),owner_id:s.user.id,tool_id:input.toolId||null,label:input.label?.trim()||"Link",url:input.url,type:["iso","driver","installer","other"].includes(input.type)?input.type:"other",updated_at:new Date().toISOString()};const r=await neon.from("tool_quick_links").upsert(row,{onConflict:"id"}).select("*").single();if(r.error)throw r.error;return r.data}
