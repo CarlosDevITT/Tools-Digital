@@ -140,3 +140,17 @@ export async function getInfrastructureStatus(){const s=await getSession();if(!s
 export async function getCurrentModuleAccess(){const s=await getSession();if(!s)return null;const r=await neon.rpc("current_module_access");if(r.error)throw r.error;return r.data||null}
 export async function adminListUsers(){const s=await getSession();if(!s)return[];const r=await neon.rpc("admin_list_users");if(r.error)throw r.error;return r.data||[]}
 export async function adminSetUserAccess(userId,modules,active=true,role="user"){const s=await getSession();if(!s)throw new Error("Sessão necessária");const r=await neon.rpc("admin_set_user_access",{p_user_id:userId,p_modules:modules,p_active:active,p_role:role});if(r.error)throw r.error;if(r.data?.ok===false)throw new Error(r.data.error||"Acesso negado");return r.data}
+
+export async function listToolCockpitSnapshot(since=null){
+ const s=await getSession();if(!s)return null;const after=q=>since?q.gt("updated_at",since):q;
+ const [tools,stacks,quickLinks,checklists,knowledge]=await Promise.all([
+  after(neon.from("tool_catalog").select("*,tool_categories(name,slug),tool_tag_links(tool_tags(name,slug))").is("deleted_at",null)),
+  after(neon.from("tool_stacks").select("*,tool_stack_items(tool_id,position)").is("deleted_at",null)),
+  after(neon.from("tool_quick_links").select("id,tool_id,label,url,type,updated_at").is("deleted_at",null)),
+  after(neon.from("tool_checklist_templates").select("id,tool_id,title,description,updated_at,tool_checklist_items(id,label,position)").is("deleted_at",null)),
+  after(neon.from("tool_knowledge_entries").select("id,tool_id,title,error_code,tags,updated_at").is("deleted_at",null))
+ ]);
+ for(const r of [tools,stacks,quickLinks,checklists,knowledge])if(r.error)throw r.error;
+ return{tools:tools.data||[],stacks:stacks.data||[],quickLinks:quickLinks.data||[],checklists:checklists.data||[],knowledge:knowledge.data||[],serverTime:new Date().toISOString()}
+}
+export async function getToolKnowledgeEntry(id){const s=await getSession();if(!s)return null;const r=await neon.from("tool_knowledge_entries").select("id,tool_id,title,body,error_code,tags,updated_at").eq("id",id).maybeSingle();if(r.error)throw r.error;return r.data||null}
