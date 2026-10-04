@@ -1,6 +1,6 @@
-import{renderMarkdown}from"./markdown.js?v=5.27.0";
-import{getTools,getKnowledgeIndex,refreshToolCockpit}from"./tools-cockpit.js?v=5.27.0";
-import{getToolKnowledgeEntry,saveToolKnowledgeEntry,deleteToolKnowledgeEntry,searchToolKnowledge}from"../services/neon.js?v=5.27.0";
+import{renderMarkdown}from"./markdown.js?v=5.28.0";
+import{getTools,getKnowledgeIndex,refreshToolCockpit}from"./tools-cockpit.js?v=5.28.0";
+import{getToolKnowledgeEntry,saveToolKnowledgeEntry,deleteToolKnowledgeEntry,searchToolKnowledge}from"../services/neon.js?v=5.28.0";
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const toolName=id=>getTools().find(t=>t.id===id)?.name||"Sem ferramenta";
 const toolOptions=selected=>'<option value="">Sem ferramenta</option>'+getTools().map(t=>`<option value="${esc(t.id)}" ${selected===t.id?"selected":""}>${esc(t.name)}</option>`).join("");
