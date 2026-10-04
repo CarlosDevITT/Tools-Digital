@@ -1,5 +1,5 @@
-import{getTools,getStacks,refreshToolCockpit}from"./tools-cockpit.js?v=5.27.0";
-import{saveToolStack,deleteToolStack}from"../services/neon.js?v=5.27.0";
+import{getTools,getStacks,refreshToolCockpit}from"./tools-cockpit.js?v=5.28.0";
+import{saveToolStack,deleteToolStack}from"../services/neon.js?v=5.28.0";
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 export function stacksHtml(){const rows=getStacks();return `<section class="tool-stacks"><div class="section-head"><div><h2>Stacks / Workspaces</h2><span>Agrupe ferramentas por rotina operacional.</span></div><button class="ghost-action" data-stack-new>+ Nova stack</button></div>${rows.length?`<div class="stack-row">${rows.map(s=>`<button class="stack-card" data-stack-open="${s.id}"><strong>${esc(s.name)}</strong><small>${s.items?.length||0} ferramentas</small><span>${esc(s.description||"")}</span></button>`).join("")}</div>`:'<div class="settings-empty">Crie uma stack para vendas, setup de máquina, suporte ou outra rotina.</div>'}</section>`}
 const selectedFrom=s=>new Set((s?.items||[]).map(x=>x.toolId||x.tool_id));
