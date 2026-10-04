@@ -1,4 +1,4 @@
-import{listVaultItems,saveVaultItem,deleteVaultItem,logVaultAccess,listVaultAudit}from"../services/neon.js?v=5.23.0";
+import{listVaultItems,saveVaultItem,deleteVaultItem,logVaultAccess,listVaultAudit}from"../services/neon.js?v=5.24.0";
 const te=new TextEncoder(),td=new TextDecoder(),b64=b=>btoa(String.fromCharCode(...new Uint8Array(b))),unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
 async function key(password,salt,iterations){const base=await crypto.subtle.importKey("raw",te.encode(password),"PBKDF2",false,["deriveKey"]);return crypto.subtle.deriveKey({name:"PBKDF2",hash:"SHA-256",salt,iterations},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
 export async function encryptVault(payload,password){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),iterations=310000,k=await key(password,salt,iterations),cipher=await crypto.subtle.encrypt({name:"AES-GCM",iv},k,te.encode(JSON.stringify(payload)));return{ciphertext:b64(cipher),iv:b64(iv),salt:b64(salt),iterations}}
