@@ -18,6 +18,7 @@ const CORE=[
   "./src/modules/tools-service-orders.js?v=5.26.0",
   "./src/modules/tools-stacks.js?v=5.26.0",
   "./src/modules/tools-custom.js?v=5.26.0",
+  "./src/modules/tools-kb.js?v=5.26.0",
   "./src/modules/flow-tools.js?v=5.26.0",
   "./src/modules/session.js?v=5.26.0",
   "./src/modules/projects.js?v=5.26.0",
