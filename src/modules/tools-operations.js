@@ -1,9 +1,9 @@
-import{getTools,getQuickLinks,getChecklists,getKnowledgeIndex,refreshToolCockpit}from"./tools-cockpit.js?v=5.27.0";
-import{saveToolQuickLink}from"../services/neon.js?v=5.27.0";
-import{checklistDialog}from"./tools-checklists.js?v=5.27.0";
-import{knowledgeDialog}from"./tools-knowledge.js?v=5.27.0";
-import{vaultDialog}from"./tools-vault.js?v=5.27.0";
-import{serviceOrdersDialog}from"./tools-service-orders.js?v=5.27.0";
+import{getTools,getQuickLinks,getChecklists,getKnowledgeIndex,refreshToolCockpit}from"./tools-cockpit.js?v=5.28.0";
+import{saveToolQuickLink}from"../services/neon.js?v=5.28.0";
+import{checklistDialog}from"./tools-checklists.js?v=5.28.0";
+import{knowledgeDialog}from"./tools-knowledge.js?v=5.28.0";
+import{vaultDialog}from"./tools-vault.js?v=5.28.0";
+import{serviceOrdersDialog}from"./tools-service-orders.js?v=5.28.0";
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const toolOptions=()=>'<option value="">Sem ferramenta</option>'+getTools().map(t=>`<option value="${esc(t.id)}">${esc(t.name)}</option>`).join("");
 export function operationsHtml(){return `<section class="tools-ops"><div class="section-head"><div><h2>Central operacional</h2><span>Suporte, documentação e execução no mesmo módulo.</span></div></div><div class="ops-grid"><button class="ops-card" data-tools-op="kb"><b>Base de Conhecimento</b><span>${getKnowledgeIndex().length} entradas · Markdown e erros</span></button><button class="ops-card" data-tools-op="checklists"><b>Checklists / SOPs</b><span>${getChecklists().length} procedimentos</span></button><button class="ops-card" data-tools-op="links"><b>Links rápidos</b><span>${getQuickLinks().length} ISOs, drivers e instaladores</span></button><button class="ops-card" data-tools-op="vault"><b>Cofre</b><span>Criptografia local · nunca em cache</span></button><button class="ops-card" data-tools-op="os"><b>Ordens de Serviço</b><span>Atendimento técnico e impressão</span></button></div></section>`}
