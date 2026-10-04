@@ -1,5 +1,5 @@
-import{getTools,findTool,refreshToolCockpit}from"./tools-cockpit.js?v=5.26.0";
-import{listToolCategories,saveCustomTool,deleteCustomTool}from"../services/neon.js?v=5.26.0";
+import{getTools,findTool,refreshToolCockpit}from"./tools-cockpit.js?v=5.27.0";
+import{listToolCategories,saveCustomTool,deleteCustomTool}from"../services/neon.js?v=5.27.0";
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 export function customToolsButton(){return '<button class="primary" data-custom-tool-new>＋ Adicionar ferramenta</button>'}
 export function bindCustomTools({notify,rerender}){document.querySelector("[data-custom-tool-new]")?.addEventListener("click",()=>editor(null,notify,rerender));document.querySelectorAll("[data-tool-edit]").forEach(b=>b.onclick=e=>{e.stopPropagation();editor(findTool(b.dataset.toolEdit),notify,rerender)})}
