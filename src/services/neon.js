@@ -155,6 +155,7 @@ export async function listToolCockpitSnapshot(since=null){
 }
 export async function getToolKnowledgeEntry(id){const s=await getSession();if(!s)return null;const r=await neon.from("tool_knowledge_entries").select("id,tool_id,title,body,error_code,tags,updated_at").eq("id",id).maybeSingle();if(r.error)throw r.error;return r.data||null}
 
+export async function searchToolKnowledge(query="",limit=30){const s=await getSession();if(!s)return[];let q=neon.from("tool_knowledge_entries").select("id,tool_id,title,body,error_code,tags,updated_at").is("deleted_at",null).order("updated_at",{ascending:false}).limit(limit);const term=String(query||"").trim().replace(/[%_,()]/g," ");if(term)q=q.or(`title.ilike.%${term}%,body.ilike.%${term}%,error_code.ilike.%${term}%`);const r=await q;if(r.error)throw r.error;return r.data||[]}
 export async function saveToolKnowledgeEntry(entry){
  const s=await getSession();if(!s)throw new Error("Sessão necessária");
  const row={id:entry.id||makeCloudId(),owner_id:s.user.id,tool_id:entry.toolId||null,title:entry.title?.trim()||"Sem título",body:entry.body||"",error_code:entry.errorCode?.trim()||null,tags:(entry.tags||[]).map(x=>String(x).trim().toLowerCase()).filter(Boolean),updated_at:new Date().toISOString()};
