@@ -1,5 +1,5 @@
-import{tools as fallbackTools}from"../data/tools.js?v=5.29.0";
-import{listToolCockpitSnapshot}from"../services/neon.js?v=5.29.0";
+import{tools as fallbackTools}from"../data/tools.js?v=5.30.0";
+import{listToolCockpitSnapshot}from"../services/neon.js?v=5.30.0";
 const CACHE_PREFIX="td:tools:cockpit:v3:",CACHE_VERSION=3,FULL_SYNC_MS=5*60*1000;
 const labels={"ia":"IA","automacao":"Automação","produtividade":"Produtividade","marketing":"Marketing","design-documentacao":"Design & Documentação","seguranca":"Segurança","educacao":"Educação","utilidades":"Utilidades","vendas-crm":"Vendas & CRM","dev-infra-cloud":"Dev & Infra Cloud","suporte-remoto-help-desk":"Suporte Remoto & Help Desk","diagnostico-so":"Diagnóstico & SO"};
 const mapTool=t=>({id:t.id,name:t.name,description:t.description||"",category:labels[t.tool_categories?.slug]||t.tool_categories?.name||"Utilidades",categorySlug:t.tool_categories?.slug||"utilidades",url:t.launch_url||"",launchUrl:t.launch_url||"",loginUrl:t.login_url||"",icon:t.icon||String(t.name||"?").slice(0,2).toUpperCase(),kind:t.kind||"catalog",saasCost:t.saas_cost==null?null:Number(t.saas_cost),currency:t.currency||null,billingCycle:t.billing_cycle||"none",updatedAt:t.updated_at||null,tags:(t.tool_tag_links||[]).map(x=>x.tool_tags).filter(Boolean)});
