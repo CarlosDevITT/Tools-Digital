@@ -3,7 +3,7 @@ import{operationsHtml,bindToolOperations}from"./modules/tools-operations.js?v=5.
 import{openKnowledgeEntry}from"./modules/tools-knowledge.js?v=5.26.0";
 import{stacksHtml,bindStacks}from"./modules/tools-stacks.js?v=5.26.0";
 import{customToolsButton,bindCustomTools}from"./modules/tools-custom.js?v=5.26.0";
-import"./modules/tools-kb.js?v=5.26.0";
+import"./modules/tools-knowledge.js?v=5.26.0";
 const toolsProxy=new Proxy([],{get(_,p){const a=getTools();const v=a[p];return typeof v==="function"?v.bind(a):v}}),tools=toolsProxy;
 import{mountFlow}from"./modules/flow-tools.js?v=5.26.0";
 import{restoreSession as restoreUserSession,clearSessionState}from"./modules/session.js?v=5.26.0";
