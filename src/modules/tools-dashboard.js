@@ -1,5 +1,5 @@
-import{getTools,getStacks,getQuickLinks,getChecklists,getKnowledgeIndex,monthlySaasTotals}from"./tools-cockpit.js?v=5.28.0";
-import{listToolChecklistRuns,listServiceOrders}from"../services/neon.js?v=5.28.0";
+import{getTools,getStacks,getQuickLinks,getChecklists,getKnowledgeIndex,monthlySaasTotals}from"./tools-cockpit.js?v=5.29.0";
+import{listToolChecklistRuns,listServiceOrders}from"../services/neon.js?v=5.29.0";
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const state={loaded:false,loading:false,runs:[],orders:[],updatedAt:null};
 const status={open:"Aberta",in_progress:"Em andamento",waiting:"Aguardando",done:"Concluída",delivered:"Entregue",cancelled:"Cancelada"};
