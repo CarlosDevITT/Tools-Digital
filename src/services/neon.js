@@ -143,7 +143,6 @@ export async function adminSetUserAccess(userId,modules,active=true,role="user")
 
 export async function listToolCockpitSnapshot(since=null){
  const s=await getSession();if(!s)return null;const after=q=>since?q.gt("updated_at",since):q;
- const clock=await neon.rpc("tool_cockpit_server_time");if(clock.error)throw clock.error;
  const [tools,stacks,quickLinks,checklists,knowledge]=await Promise.all([
   after(neon.from("tool_catalog").select("*,tool_categories(name,slug),tool_tag_links(tool_tags(name,slug))").is("deleted_at",null)),
   after(neon.from("tool_stacks").select("*,tool_stack_items(tool_id,position)").is("deleted_at",null)),
@@ -152,7 +151,7 @@ export async function listToolCockpitSnapshot(since=null){
   after(neon.from("tool_knowledge_entries").select("id,tool_id,title,error_code,tags,updated_at").is("deleted_at",null))
  ]);
  for(const r of [tools,stacks,quickLinks,checklists,knowledge])if(r.error)throw r.error;
- return{userId:s.user.id,tools:tools.data||[],stacks:stacks.data||[],quickLinks:quickLinks.data||[],checklists:checklists.data||[],knowledge:knowledge.data||[],serverTime:clock.data||new Date().toISOString()}
+ return{userId:s.user.id,tools:tools.data||[],stacks:stacks.data||[],quickLinks:quickLinks.data||[],checklists:checklists.data||[],knowledge:knowledge.data||[],serverTime:new Date().toISOString()}
 }
 export async function getToolKnowledgeEntry(id){const s=await getSession();if(!s)return null;const r=await neon.from("tool_knowledge_entries").select("id,tool_id,title,body,error_code,tags,updated_at").eq("id",id).maybeSingle();if(r.error)throw r.error;return r.data||null}
 
