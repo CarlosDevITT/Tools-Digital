@@ -1,4 +1,4 @@
-import{saveFinanceTransaction,deleteCloudRecord,makeCloudId}from"../services/neon.js?v=5.31.0";
+import{saveFinanceTransaction,deleteCloudRecord,makeCloudId}from"../services/neon.js?v=5.31.2";
 
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const money=v=>(Number(v||0)/100).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
