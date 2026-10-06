@@ -1,5 +1,5 @@
-// JEV adapter — server-side only.
-// Never expose a TypeSafe/JEV API key in this PWA.
+// JEV protocol adapter — OpenAI is the intelligence engine.
+// Never expose a OpenAI API key in this PWA.
 // The browser calls your own backend endpoint; backend calls JEV.
 export const JEV_DECISION_TYPES=Object.freeze({CHOICE:"choice",SCORE:"score",NOUL:"noul"});
 export function buildAgentDecisionState({task,agents=[],project=null}={}){
