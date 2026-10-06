@@ -1,22 +1,22 @@
-import{getTools,findTool,getStacks,getQuickLinks,getChecklists,getKnowledgeIndex,localToolSearch,monthlySaasTotals,refreshToolCockpit,clearToolCockpit}from"./modules/tools-cockpit.js?v=5.45.0";
-import{operationsHtml,bindToolOperations}from"./modules/tools-operations.js?v=5.45.0";
-import{toolsDashboardHtml,bindToolsDashboard}from"./modules/tools-dashboard.js?v=5.45.0";
-import{openKnowledgeEntry}from"./modules/tools-knowledge.js?v=5.45.0";
-import{stacksHtml,bindStacks}from"./modules/tools-stacks.js?v=5.45.0";
-import{customToolsButton,bindCustomTools}from"./modules/tools-custom.js?v=5.45.0";
-import"./modules/tools-knowledge.js?v=5.45.0";
+import{getTools,findTool,getStacks,getQuickLinks,getChecklists,getKnowledgeIndex,localToolSearch,monthlySaasTotals,refreshToolCockpit,clearToolCockpit}from"./modules/tools-cockpit.js?v=5.46.0";
+import{operationsHtml,bindToolOperations}from"./modules/tools-operations.js?v=5.46.0";
+import{toolsDashboardHtml,bindToolsDashboard}from"./modules/tools-dashboard.js?v=5.46.0";
+import{openKnowledgeEntry}from"./modules/tools-knowledge.js?v=5.46.0";
+import{stacksHtml,bindStacks}from"./modules/tools-stacks.js?v=5.46.0";
+import{customToolsButton,bindCustomTools}from"./modules/tools-custom.js?v=5.46.0";
+import"./modules/tools-knowledge.js?v=5.46.0";
 const toolsProxy=new Proxy([],{get(_,p){const a=getTools();const v=a[p];return typeof v==="function"?v.bind(a):v}}),tools=toolsProxy;
-import{mountFlow}from"./modules/flow-tools.js?v=5.45.0";
-import{mountAiOperations}from"./modules/ai-operations.js?v=5.45.0";
-import{restoreSession as restoreUserSession,clearSessionState}from"./modules/session.js?v=5.45.0";
-import{projectSource,projects2View,project2Dialog,bindProjects2}from"./modules/projects.js?v=5.45.0";
-import{bootstrapApp}from"./modules/bootstrap.js?v=5.45.0";
-import{secondBrainView,mountSecondBrain}from"./modules/second-brain.js?v=5.45.0";
-import{financeScopeTabs,companyManagerHtml,defaultCategories,familyWorkspace,memberManagerHtml,accountManagerHtml,familyOnboardingHtml,inviteCreatedHtml,matchesPersonalFinanceFilter}from"./modules/finance.js?v=5.45.0";
-import{mountFinanceEnhancements}from"./modules/finance-enhancements.js?v=5.45.0";
-import"./modules/finance-fixed-bills.js?v=5.45.0";
-import"./modules/project-enhancements.js?v=5.45.0";
-import{getSession,signIn,signUp,signOut,pullCloud,pushCloud,cloudCounts,getProfile,saveProfile,listWorkspaces,saveWorkspace,deleteWorkspace,listCloudProjects,saveCloudProject,deleteCloudProject,listActivity,addActivity,listFlows,saveFlowDocument,deleteFlowDocument,saveFinanceTransaction,deleteCloudRecord,deleteCloudFavorite,replaceCloudFavorites,makeCloudId,saveKnowledgeNote,syncNoteLinks,getNoteBacklinks,getKnowledgeGraph,searchKnowledgeNotes,listFinanceEntities,saveFinanceEntity,deleteFinanceEntity,listFinanceMembers,saveFinanceMember,deleteFinanceMember,listFinanceAccounts,saveFinanceAccount,deleteFinanceAccount,createFinanceInvite,listFinanceInvites,getFinanceInvite,acceptFinanceInvite,reconcileFamilyMemberships,listSettings,saveSettings,requestPasswordReset,getInfrastructureStatus,getCurrentModuleAccess,adminListUsers,adminSetUserAccess}from"./services/neon.js?v=5.45.0";
+import{mountFlow}from"./modules/flow-tools.js?v=5.46.0";
+import{mountAiOperations}from"./modules/ai-operations.js?v=5.46.0";
+import{restoreSession as restoreUserSession,clearSessionState}from"./modules/session.js?v=5.46.0";
+import{projectSource,projects2View,project2Dialog,bindProjects2}from"./modules/projects.js?v=5.46.0";
+import{bootstrapApp}from"./modules/bootstrap.js?v=5.46.0";
+import{secondBrainView,mountSecondBrain}from"./modules/second-brain.js?v=5.46.0";
+import{financeScopeTabs,companyManagerHtml,defaultCategories,familyWorkspace,memberManagerHtml,accountManagerHtml,familyOnboardingHtml,inviteCreatedHtml,matchesPersonalFinanceFilter}from"./modules/finance.js?v=5.46.0";
+import{mountFinanceEnhancements}from"./modules/finance-enhancements.js?v=5.46.0";
+import"./modules/finance-fixed-bills.js?v=5.46.0";
+import"./modules/project-enhancements.js?v=5.46.0";
+import{getSession,signIn,signUp,signOut,pullCloud,pushCloud,cloudCounts,getProfile,saveProfile,listWorkspaces,saveWorkspace,deleteWorkspace,listCloudProjects,saveCloudProject,deleteCloudProject,listActivity,addActivity,listFlows,saveFlowDocument,deleteFlowDocument,saveFinanceTransaction,deleteCloudRecord,deleteCloudFavorite,replaceCloudFavorites,makeCloudId,saveKnowledgeNote,syncNoteLinks,getNoteBacklinks,getKnowledgeGraph,searchKnowledgeNotes,listFinanceEntities,saveFinanceEntity,deleteFinanceEntity,listFinanceMembers,saveFinanceMember,deleteFinanceMember,listFinanceAccounts,saveFinanceAccount,deleteFinanceAccount,createFinanceInvite,listFinanceInvites,getFinanceInvite,acceptFinanceInvite,reconcileFamilyMemberships,listSettings,saveSettings,requestPasswordReset,getInfrastructureStatus,getCurrentModuleAccess,adminListUsers,adminSetUserAccess}from"./services/neon.js?v=5.46.0";
 function installGlobalModalGuard(){if(!window.Swal||window.__tdModalGuard)return;window.__tdModalGuard=true;const original=Swal.fire.bind(Swal);Swal.fire=(...args)=>{let o=args[0];if(o&&typeof o==="object"&&!Array.isArray(o)){o={...o};if(o.toast!==true){o.showCloseButton=o.showCloseButton??true;o.closeButtonAriaLabel=o.closeButtonAriaLabel||"Fechar";o.allowEscapeKey=o.allowEscapeKey??true;o.allowOutsideClick=o.allowOutsideClick??true}args[0]=o}return original(...args)};const close=e=>{if(!Swal.isVisible?.())return;const t=e.target?.closest?.(".swal2-close,.swal2-cancel,[data-modal-close]");if(!t)return;e.preventDefault();e.stopPropagation();Swal.close()};document.addEventListener("click",close);document.addEventListener("keydown",e=>{if(e.key==="Escape"&&Swal.isVisible?.()){e.preventDefault();Swal.close()}},false)}
 installGlobalModalGuard();
 const $=s=>document.querySelector(s),store={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set:(k,v)=>localStorage.setItem(k,JSON.stringify(v))};
@@ -190,7 +190,7 @@ function runCommand(i=commandIndex){const x=commandItems[i];if(!x)return;if(x.ki
 function openCommand(){overlay.hidden=false;input.value="";command();setTimeout(()=>input.focus(),0)}
 function closeCommand(){overlay.hidden=true}
 $("#commandBtn").onclick=openCommand;input.oninput=e=>command(e.target.value);document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();openCommand();return}if(overlay.hidden)return;if(e.key==="Escape"){closeCommand();return}if(e.key==="ArrowDown"){e.preventDefault();commandIndex=Math.min(commandIndex+1,commandItems.length-1);paintCommandSelection()}else if(e.key==="ArrowUp"){e.preventDefault();commandIndex=Math.max(commandIndex-1,0);paintCommandSelection()}else if(e.key==="Enter"){e.preventDefault();runCommand()}});overlay.onclick=e=>{if(e.target===overlay)closeCommand()};
-const APP_VERSION="5.45.0";let swRegistration=null,refreshing=false,updatePromptOpen=false;
+const APP_VERSION="5.46.0";let swRegistration=null,refreshing=false,updatePromptOpen=false;
 $("#appVersion").textContent="Tools Digital v"+APP_VERSION;
 async function updatePrompt(worker){if(!worker||updatePromptOpen)return;updatePromptOpen=true;const ok=window.Swal?(await Swal.fire({title:"Nova atualização disponível",text:"Uma nova versão do Tools Digital está pronta para instalar.",icon:"info",showCancelButton:true,confirmButtonText:"Atualizar agora",cancelButtonText:"Depois",background:"#080808",color:"#fff",confirmButtonColor:"#fff"})).isConfirmed:confirm("Nova atualização disponível. Atualizar agora?");if(ok)worker.postMessage({type:"SKIP_WAITING"});updatePromptOpen=false}
 navigator.serviceWorker?.addEventListener?.("message",event=>{if(event.data?.type==="TD_VERSION_ACTIVATED"&&event.data.version===APP_VERSION&&!sessionStorage.getItem("td:version-reloaded:"+APP_VERSION)){sessionStorage.setItem("td:version-reloaded:"+APP_VERSION,"1");location.reload()}});
